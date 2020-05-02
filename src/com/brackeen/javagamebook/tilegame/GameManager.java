@@ -45,6 +45,7 @@ public class GameManager extends GameCore {
     private GameAction moveRight;
     private GameAction jump;
     private GameAction exit;
+    private int cont=0;
 
 
     public void init() {
@@ -61,6 +62,7 @@ public class GameManager extends GameCore {
         renderer = new TileMapRenderer();
         renderer.setBackground(
             resourceManager.loadImage("background.png"));
+        renderer.setBackground(resourceManager.loadImage("pantalla0.png"));
 
         // load first map
         map = resourceManager.loadNextMap();
@@ -135,6 +137,40 @@ public class GameManager extends GameCore {
     public void draw(Graphics2D g) {
         renderer.draw(g, map,
             screen.getWidth(), screen.getHeight());
+        if(cont>200){
+         renderer.setBackground(resourceManager.loadImage("pantalla0.png"));
+        }
+        if(cont>400){
+         renderer.setBackground(resourceManager.loadImage("pantalla1.jpg"));
+        }
+        if(cont>600){
+         renderer.setBackground(resourceManager.loadImage("pantalla2.png"));
+        }
+        if(cont>800){
+         renderer.setBackground(resourceManager.loadImage("pantalla3.jpg"));
+        }
+        if(cont>1000){
+         renderer.setBackground(resourceManager.loadImage("pantalla4.png"));
+        }
+        if(cont>1200){
+         renderer.setBackground(resourceManager.loadImage("pantalla5.jpg"));
+        }
+        if(cont>1400){
+         renderer.setBackground(resourceManager.loadImage("pantalla6.jpg"));
+        }
+        if(cont>1600){
+         renderer.setBackground(resourceManager.loadImage("pantalla7.jpg"));
+        }
+        if(cont>1800){
+         renderer.setBackground(resourceManager.loadImage("pantalla8.jpg"));
+        }
+        if(cont>2000){
+         renderer.setBackground(resourceManager.loadImage("pantalla9.jpg"));
+        }
+        if(cont>2200){
+            cont=0;
+        }
+        cont++;
     }
 
 
