@@ -7,10 +7,10 @@ import com.brackeen.javagamebook.graphics.Animation;
 */
 public class Fly extends Creature {
 
-    public Fly(Animation left, Animation right,
+    public Fly(Animation left, Animation right,Animation up, Animation down,
         Animation deadLeft, Animation deadRight)
     {
-        super(left, right, deadLeft, deadRight);
+        super(left, right, deadLeft,up,down, deadRight);
     }
 
 

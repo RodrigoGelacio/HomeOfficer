@@ -40,10 +40,8 @@ public class InputManager implements KeyListener, MouseListener,
     // "alt graph") are less than 600.
     private static final int NUM_KEY_CODES = 600;
 
-    private GameAction[] keyActions =
-        new GameAction[NUM_KEY_CODES];
-    private GameAction[] mouseActions =
-        new GameAction[NUM_MOUSE_CODES];
+    private GameAction[] keyActions  = new GameAction[NUM_KEY_CODES];
+    private GameAction[] mouseActions = new GameAction[NUM_MOUSE_CODES];
 
     private Point mouseLocation;
     private Point centerLocation;
