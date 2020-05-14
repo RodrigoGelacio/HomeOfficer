@@ -11,10 +11,10 @@ public class Player extends Creature {
 
     private boolean onGround;
 
-    public Player(Animation left, Animation right,
+    public Player(Animation left, Animation right,Animation up, Animation down,
         Animation deadLeft, Animation deadRight)
     {
-        super(left, right, deadLeft, deadRight);
+        super(left, right,up,down, deadLeft, deadRight);
     }
 
 
@@ -24,19 +24,11 @@ public class Player extends Creature {
 
 
     public void collideVertical() {
-        // check if collided with ground
-        if (getVelocityY() > 0) {
-            onGround = true;
-        }
         setVelocityY(0);
     }
 
 
     public void setY(float y) {
-        // check if falling
-        if (Math.round(y) > Math.round(getY())) {
-            onGround = false;
-        }
         super.setY(y);
     }
 
@@ -51,10 +43,6 @@ public class Player extends Creature {
         if forceJump is true.
     */
     public void jump(boolean forceJump) {
-        if (onGround || forceJump) {
-            onGround = false;
-            setVelocityY(JUMP_SPEED);
-        }
     }
 
 

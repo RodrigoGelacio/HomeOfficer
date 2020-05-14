@@ -21,6 +21,8 @@ public abstract class Creature extends Sprite {
 
     private Animation left;
     private Animation right;
+    private Animation up;
+    private Animation down;
     private Animation deadLeft;
     private Animation deadRight;
     private int state;
@@ -29,12 +31,14 @@ public abstract class Creature extends Sprite {
     /**
         Creates a new Creature with the specified Animations.
     */
-    public Creature(Animation left, Animation right,
+    public Creature(Animation left, Animation right, Animation up, Animation down,
         Animation deadLeft, Animation deadRight)
     {
         super(right);
         this.left = left;
         this.right = right;
+        this.up = up;
+        this.down = down;
         this.deadLeft = deadLeft;
         this.deadRight = deadRight;
         state = STATE_NORMAL;
@@ -48,6 +52,8 @@ public abstract class Creature extends Sprite {
             return constructor.newInstance(new Object[] {
                 (Animation)left.clone(),
                 (Animation)right.clone(),
+                (Animation)up.clone(),
+                (Animation)down.clone(),
                 (Animation)deadLeft.clone(),
                 (Animation)deadRight.clone()
             });
@@ -150,6 +156,13 @@ public abstract class Creature extends Sprite {
         else if (getVelocityX() > 0) {
             newAnim = right;
         }
+        if (getVelocityY() < 0) {
+            newAnim = up;
+        }
+        else if (getVelocityY() > 0) {
+            newAnim = down;
+        }
+        
         if (state == STATE_DYING && newAnim == left) {
             newAnim = deadLeft;
         }
