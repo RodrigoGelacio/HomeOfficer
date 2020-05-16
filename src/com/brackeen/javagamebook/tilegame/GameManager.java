@@ -262,17 +262,12 @@ public class GameManager extends GameCore {
      * map.
      */
     public void update(long elapsedTime) {
-<<<<<<< HEAD
         Creature player = (Creature)map.getPlayer();
 
-        //por ahora no se puede morir el policia. Cambiar en el futuro
-=======
-        Creature player = (Creature) map.getPlayer();
 
->>>>>>> ae9a9184b7912ae6e4babcd0f0237ed5a03edf1d
         // player is dead! start map over
         if (player.getState() == Creature.STATE_DEAD) {
-           // map = resourceManager.reloadMap();
+            map = resourceManager.reloadMap();
             return;
         }
 
@@ -333,11 +328,7 @@ public class GameManager extends GameCore {
             creature.collideHorizontal();
         }
         if (creature instanceof Player) {
-<<<<<<< HEAD
             checkPlayerCollision((Player)creature, true);
-=======
-            checkPlayerCollision((Player) creature, false);
->>>>>>> ae9a9184b7912ae6e4babcd0f0237ed5a03edf1d
         }
 
         // change y
@@ -360,8 +351,7 @@ public class GameManager extends GameCore {
             creature.collideVertical();
         }
         if (creature instanceof Player) {
-            boolean canKill = (oldY < creature.getY());
-            checkPlayerCollision((Player) creature, canKill);
+            checkPlayerCollision((Player) creature, true);
         }
 
     }
@@ -386,16 +376,11 @@ public class GameManager extends GameCore {
                 // kill the badguy and make player bounce
                 soundManager.play(boopSound);
                 badguy.setState(Creature.STATE_DYING);
-<<<<<<< HEAD
+                score+=10;
                 //player.setY(badguy.getY() - player.getHeight());
                // player.jump(true);
             }
             else {
-=======
-                player.setY(badguy.getY() - player.getHeight());
-                player.jump(true);
-            } else {
->>>>>>> ae9a9184b7912ae6e4babcd0f0237ed5a03edf1d
                 // player dies!
                 player.setState(Creature.STATE_DYING);
             }
