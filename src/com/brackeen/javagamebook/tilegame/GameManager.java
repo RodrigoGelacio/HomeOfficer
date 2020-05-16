@@ -262,7 +262,8 @@ public class GameManager extends GameCore {
      * map.
      */
     public void update(long elapsedTime) {
-        Creature player = (Creature) map.getPlayer();
+        Creature player = (Creature)map.getPlayer();
+
 
         // player is dead! start map over
         if (player.getState() == Creature.STATE_DEAD) {
@@ -327,7 +328,7 @@ public class GameManager extends GameCore {
             creature.collideHorizontal();
         }
         if (creature instanceof Player) {
-            checkPlayerCollision((Player) creature, false);
+            checkPlayerCollision((Player)creature, true);
         }
 
         // change y
@@ -350,8 +351,7 @@ public class GameManager extends GameCore {
             creature.collideVertical();
         }
         if (creature instanceof Player) {
-            boolean canKill = (oldY < creature.getY());
-            checkPlayerCollision((Player) creature, canKill);
+            checkPlayerCollision((Player) creature, true);
         }
 
     }
@@ -376,9 +376,11 @@ public class GameManager extends GameCore {
                 // kill the badguy and make player bounce
                 soundManager.play(boopSound);
                 badguy.setState(Creature.STATE_DYING);
-                player.setY(badguy.getY() - player.getHeight());
-                player.jump(true);
-            } else {
+                score+=10;
+                //player.setY(badguy.getY() - player.getHeight());
+               // player.jump(true);
+            }
+            else {
                 // player dies!
                 player.setState(Creature.STATE_DYING);
             }
