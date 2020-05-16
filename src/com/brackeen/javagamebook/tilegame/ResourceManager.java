@@ -23,6 +23,12 @@ public class ResourceManager {
 
     // host sprites used for cloning
     private Sprite playerSprite;
+    private Sprite person1Sprite;
+    private Sprite person2Sprite;
+    private Sprite person3Sprite;
+    private Sprite person4Sprite;
+    private Sprite person5Sprite;
+    private Sprite person6Sprite;
     private Sprite musicSprite;
     private Sprite coinSprite;
     private Sprite goalSprite;
@@ -167,10 +173,22 @@ public class ResourceManager {
                     addSprite(newMap, goalSprite, x, y);
                 }
                 else if (ch == '1') {
-                    addSprite(newMap, grubSprite, x, y);
+                    addSprite(newMap, person1Sprite, x, y);
                 }
                 else if (ch == '2') {
-                    addSprite(newMap, flySprite, x, y);
+                    addSprite(newMap, person2Sprite, x, y);
+                }
+                else if (ch == '3'){
+                   addSprite(newMap, person3Sprite, x, y); 
+                }
+                else if (ch == '4') {
+                    addSprite(newMap, person4Sprite, x, y);
+                }
+                else if (ch == '5') {
+                    addSprite(newMap, person5Sprite, x, y);
+                }
+                else if (ch == '6'){
+                   addSprite(newMap, person6Sprite, x, y); 
                 }
             }
         }
@@ -180,6 +198,7 @@ public class ResourceManager {
         player.setX(TileMapRenderer.tilesToPixels(newMap.getWidth()/2));
         player.setY(TileMapRenderer.tilesToPixels(10));
         newMap.setPlayer(player);
+        
 
         return newMap;
     }
@@ -247,6 +266,25 @@ public class ResourceManager {
             loadImage("fly3.png"),
             loadImage("grub1.png"),
             loadImage("grub2.png"),
+            loadImage("person1Left1.png"),
+            loadImage("person1Left2.png"),
+            loadImage("person1Left3.png"),
+            loadImage("person2Left1.png"),
+            loadImage("person2Left2.png"),
+            loadImage("person2Left3.png"),
+            loadImage("person3Left1.png"),
+            loadImage("person3Left2.png"),
+            loadImage("person3Left3.png"),
+            loadImage("person4Left1.png"),
+            loadImage("person4Left2.png"),
+            loadImage("person4Left3.png"),
+            loadImage("person5Left1.png"),
+            loadImage("person5Left2.png"),
+            loadImage("person5Left3.png"),
+            loadImage("person6Left1.png"),
+            loadImage("person6Left2.png"),
+            loadImage("person6Left3.png"),
+            
         };
         
         //load vertical images
@@ -254,12 +292,48 @@ public class ResourceManager {
             loadImage("playerUp1.png"),
             loadImage("playerUp2.png"),
             loadImage("playerUp3.png"),
+            loadImage("person1Up1.png"),
+            loadImage("person1Up2.png"),
+            loadImage("person1Up3.png"),
+            loadImage("person2Up1.png"),
+            loadImage("person2Up2.png"),
+            loadImage("person2Up3.png"),
+            loadImage("person3Up1.png"),
+            loadImage("person3Up2.png"),
+            loadImage("person3Up3.png"),
+            loadImage("person4Up1.png"),
+            loadImage("person4Up2.png"),
+            loadImage("person4Up3.png"),
+            loadImage("person5Up1.png"),
+            loadImage("person5Up2.png"),
+            loadImage("person5Up3.png"),
+            loadImage("person6Up1.png"),
+            loadImage("person6Up2.png"),
+            loadImage("person6Up3.png"),
         };
         
         imagesDown[0] = new Image[]{
             loadImage("playerDown1.png"),
             loadImage("playerDown2.png"),
             loadImage("playerDown3.png"),
+            loadImage("person1Down1.png"),
+            loadImage("person1Down2.png"),
+            loadImage("person1Down3.png"),
+            loadImage("person2Down1.png"),
+            loadImage("person2Down2.png"),
+            loadImage("person2Down3.png"),
+            loadImage("person3Down1.png"),
+            loadImage("person3Down2.png"),
+            loadImage("person3Down3.png"),
+            loadImage("person4Down1.png"),
+            loadImage("person4Down2.png"),
+            loadImage("person4Down3.png"),
+            loadImage("person5Down1.png"),
+            loadImage("person5Down2.png"),
+            loadImage("person5Down3.png"),
+            loadImage("person6Down1.png"),
+            loadImage("person6Down2.png"),
+            loadImage("person6Down3.png"),
         };
 
         imagesHorizontal[1] = new Image[imagesHorizontal[0].length];
@@ -276,6 +350,12 @@ public class ResourceManager {
 
         // create creature animations
         Animation[] playerAnim = new Animation[6];
+        Animation[] person1Anim = new Animation[6];
+        Animation[] person2Anim = new Animation[6];
+        Animation[] person3Anim = new Animation[6];
+        Animation[] person4Anim = new Animation[6];
+        Animation[] person5Anim = new Animation[6];
+        Animation[] person6Anim = new Animation[6];
         Animation[] flyAnim = new Animation[6];
         Animation[] grubAnim = new Animation[6];
         for (int i=0; i<4; i++) {
@@ -285,10 +365,34 @@ public class ResourceManager {
                 imagesHorizontal[i][3], imagesHorizontal[i][4], imagesHorizontal[i][5]);
             grubAnim[i] = createGrubAnim(
                 imagesHorizontal[i][6], imagesHorizontal[i][7]);
+            person1Anim[i] = createPersonAnim(
+                imagesHorizontal[i][8], imagesHorizontal[i][9], imagesHorizontal[i][10]);
+            person2Anim[i] = createPersonAnim(
+                imagesHorizontal[i][11], imagesHorizontal[i][12], imagesHorizontal[i][13]);
+            person3Anim[i] = createPersonAnim(
+                imagesHorizontal[i][14], imagesHorizontal[i][15], imagesHorizontal[i][16]);
+            person4Anim[i] = createPersonAnim(
+                imagesHorizontal[i][17], imagesHorizontal[i][18], imagesHorizontal[i][19]);
+            person5Anim[i] = createPersonAnim(
+                imagesHorizontal[i][20], imagesHorizontal[i][21], imagesHorizontal[i][22]);
+            person6Anim[i] = createPersonAnim(
+                imagesHorizontal[i][23], imagesHorizontal[i][24], imagesHorizontal[i][25]);            
         }
         
         playerAnim[4] = createPlayerAnim(imagesUp[0][0], imagesUp[0][1],imagesUp[0][2]);
         playerAnim[5] = createPlayerAnim(imagesDown[0][0], imagesDown[0][1],imagesDown[0][2]);
+        person1Anim[4] = createPersonAnim(imagesUp[0][3], imagesUp[0][4], imagesUp[0][5]);
+        person1Anim[5] = createPersonAnim(imagesDown[0][3], imagesDown[0][4], imagesDown[0][5]);
+        person2Anim[4] = createPersonAnim(imagesUp[0][6], imagesUp[0][7], imagesUp[0][8]);
+        person2Anim[5] = createPersonAnim(imagesDown[0][6], imagesDown[0][7], imagesDown[0][8]);
+        person3Anim[4] = createPersonAnim(imagesUp[0][9], imagesUp[0][10], imagesUp[0][11]);
+        person3Anim[5] = createPersonAnim(imagesDown[0][9], imagesDown[0][10], imagesDown[0][11]);
+        person4Anim[4] = createPersonAnim(imagesUp[0][12], imagesUp[0][13], imagesUp[0][14]);
+        person4Anim[5] = createPersonAnim(imagesDown[0][12], imagesDown[0][13], imagesDown[0][14]);
+        person5Anim[4] = createPersonAnim(imagesUp[0][15], imagesUp[0][16], imagesUp[0][17]);
+        person5Anim[5] = createPersonAnim(imagesDown[0][15], imagesDown[0][16], imagesDown[0][17]);
+        person6Anim[4] = createPersonAnim(imagesUp[0][18], imagesUp[0][19], imagesUp[0][20]);
+        person6Anim[5] = createPersonAnim(imagesDown[0][18], imagesDown[0][19], imagesDown[0][20]);
 
         // create creature sprites
         playerSprite = new Player(playerAnim[0], playerAnim[1], playerAnim[4], playerAnim[5],
@@ -297,6 +401,18 @@ public class ResourceManager {
             flyAnim[2], flyAnim[3]);
         grubSprite = new Grub(grubAnim[0], grubAnim[1],grubAnim[0], grubAnim[1],
             grubAnim[2], grubAnim[3]);
+        person1Sprite = new Person(person1Anim[0], person1Anim[1], person1Anim[4], person1Anim[5], 
+                person1Anim[2], person1Anim[3]);
+        person2Sprite = new Person(person2Anim[0], person2Anim[1], person2Anim[4], person2Anim[5], 
+                person2Anim[2], person2Anim[3]);
+        person3Sprite = new Person(person3Anim[0], person3Anim[1], person3Anim[4], person3Anim[5], 
+                person3Anim[2], person3Anim[3]);
+        person4Sprite = new Person(person4Anim[0], person4Anim[1], person4Anim[4], person4Anim[5], 
+                person4Anim[2], person4Anim[3]);
+        person5Sprite = new Person(person5Anim[0], person5Anim[1], person5Anim[4], person5Anim[5], 
+                person5Anim[2], person5Anim[3]);
+        person6Sprite = new Person(person6Anim[0], person6Anim[1], person6Anim[4], person6Anim[5], 
+                person6Anim[2], person6Anim[3]);
     }
 
 
@@ -310,7 +426,15 @@ public class ResourceManager {
         return anim;
     }
 
-
+    private Animation createPersonAnim(Image person1,
+            Image person2, Image person3){
+        Animation anim = new Animation();
+        anim.addFrame(person1, 150);
+        anim.addFrame(person2, 150);
+        anim.addFrame(person3, 150);
+        return anim;
+    }
+    
     private Animation createFlyAnim(Image img1, Image img2,
         Image img3)
     {

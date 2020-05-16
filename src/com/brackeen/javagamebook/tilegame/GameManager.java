@@ -269,10 +269,10 @@ public class GameManager extends GameCore {
     public void update(long elapsedTime) {
         Creature player = (Creature)map.getPlayer();
 
-
+        //por ahora no se puede morir el policia. Cambiar en el futuro
         // player is dead! start map over
         if (player.getState() == Creature.STATE_DEAD) {
-            map = resourceManager.reloadMap();
+           // map = resourceManager.reloadMap();
             return;
         }
 
@@ -339,7 +339,7 @@ public class GameManager extends GameCore {
             creature.collideHorizontal();
         }
         if (creature instanceof Player) {
-            checkPlayerCollision((Player)creature, false);
+            checkPlayerCollision((Player)creature, true);
         }
 
         // change y
@@ -394,8 +394,8 @@ public class GameManager extends GameCore {
                 // kill the badguy and make player bounce
                 soundManager.play(boopSound);
                 badguy.setState(Creature.STATE_DYING);
-                player.setY(badguy.getY() - player.getHeight());
-                player.jump(true);
+                //player.setY(badguy.getY() - player.getHeight());
+               // player.jump(true);
             }
             else {
                 // player dies!
