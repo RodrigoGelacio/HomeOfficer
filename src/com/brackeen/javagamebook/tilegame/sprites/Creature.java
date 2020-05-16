@@ -81,6 +81,7 @@ public abstract class Creature extends Sprite {
     public void wakeUp() {
         if (getState() == STATE_NORMAL && getVelocityX() == 0) {
             setVelocityX(-getMaxSpeed());
+            setVelocityY(-getMaxSpeed());
         }
     }
 
@@ -140,7 +141,7 @@ public abstract class Creature extends Sprite {
         tile vertically.
     */
     public void collideVertical() {
-        setVelocityY(0);
+        setVelocityY(-getVelocityY());
     }
 
 
