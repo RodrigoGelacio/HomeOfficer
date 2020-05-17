@@ -164,7 +164,7 @@ public class GameManager extends GameCore {
      */
     public void toggleDrumPlayback() {
         Sequencer sequencer = midiPlayer.getSequencer();
-        if (sequencer != null) {
+        if (sequencer == null) {
             sequencer.setTrackMute(DRUM_TRACK,
                     !sequencer.getTrackMute(DRUM_TRACK));
         }
@@ -262,6 +262,8 @@ public class GameManager extends GameCore {
      * map.
      */
     public void update(long elapsedTime) {
+        
+        
         Creature player = (Creature)map.getPlayer();
 
 
