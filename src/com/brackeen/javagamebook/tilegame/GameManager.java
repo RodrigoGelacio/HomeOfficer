@@ -80,7 +80,7 @@ public class GameManager extends GameCore {
         // start music
         midiPlayer = new MidiPlayer();
         Sequence sequence
-                = midiPlayer.getSequence("src/sounds/music.midi");
+                = midiPlayer.getSequence("src/sounds/beast-attack.mid");
         midiPlayer.play(sequence, true);
         toggleDrumPlayback();
     }
