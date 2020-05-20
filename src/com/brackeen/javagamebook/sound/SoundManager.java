@@ -238,7 +238,9 @@ public class SoundManager extends ThreadPool {
                     sound.getSamples());
             }
             else {
+                System.out.println("QUE PEDO SI FUNCIONA");
                 is = new ByteArrayInputStream(sound.getSamples());
+                
             }
 
             return play(is, filter);

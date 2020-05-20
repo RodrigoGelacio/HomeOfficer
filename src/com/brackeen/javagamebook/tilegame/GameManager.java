@@ -36,7 +36,7 @@ public class GameManager extends GameCore {
     private MidiPlayer midiPlayer;
     private SoundManager soundManager;
     private ResourceManager resourceManager;
-    private Sound prizeSound;
+    private Sound personCaptured;
     private Sound boopSound;
     private InputManager inputManager;
     private TileMapRenderer renderer;
@@ -74,7 +74,7 @@ public class GameManager extends GameCore {
 
         // load sounds
         soundManager = new SoundManager(PLAYBACK_FORMAT);
-        prizeSound = soundManager.getSound("src/sounds/prize.wav");
+        personCaptured = soundManager.getSound("src/sounds/ouch.wav");
         boopSound = soundManager.getSound("src/sounds/boop2.wav");
 
         // start music
@@ -376,7 +376,7 @@ public class GameManager extends GameCore {
             Creature badguy = (Creature) collisionSprite;
             if (canKill) {
                 // kill the badguy and make player bounce
-                soundManager.play(boopSound);
+                soundManager.play(personCaptured);
                 badguy.setState(Creature.STATE_DYING);
                 score+=10;
                 //player.setY(badguy.getY() - player.getHeight());
@@ -398,14 +398,14 @@ public class GameManager extends GameCore {
 
         if (powerUp instanceof PowerUp.Star) {
             // do something here, like give the player points
-            soundManager.play(prizeSound);
+            soundManager.play(personCaptured);
         } else if (powerUp instanceof PowerUp.Music) {
             // change the music
-            soundManager.play(prizeSound);
+            soundManager.play(personCaptured);
             toggleDrumPlayback();
         } else if (powerUp instanceof PowerUp.Goal) {
             // advance to next map
-            soundManager.play(prizeSound,
+            soundManager.play(personCaptured,
                     new EchoFilter(2000, .7f), false);
             map = resourceManager.loadNextMap();
         }
