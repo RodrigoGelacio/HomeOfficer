@@ -11,7 +11,7 @@ import com.brackeen.javagamebook.graphics.Animation;
  *
  * @author carol
  */
-public class Virus extends Creature2{
+public class Virus extends Creature{
     
     Player player;
     
