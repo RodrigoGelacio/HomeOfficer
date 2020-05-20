@@ -6,12 +6,16 @@
             <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/JuegoBrackeen/src/images/heart2.png</file>
             <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/JuegoBrackeen/src/com/brackeen/javagamebook/tilegame/ResourceManager.java</file>
             <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/JuegoBrackeen/src/images/powerup2.png</file>
+            <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/JuegoBrackeen/src/com/brackeen/javagamebook/sound/SoundManager.java</file>
             <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/JuegoBrackeen/src/images/music3.png</file>
             <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/JuegoBrackeen/src/com/brackeen/javagamebook/sound/Filter3d.java</file>
             <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/JuegoBrackeen/src/images/background.png</file>
             <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/JuegoBrackeen/src/images/powerup1.png</file>
+            <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/JuegoBrackeen/src/com/brackeen/javagamebook/sound/Sound.java</file>
+            <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/JuegoBrackeen/src/com/brackeen/javagamebook/sound/MidiPlayer.java</file>
             <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/JuegoBrackeen/src/images/fly1.png</file>
             <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/JuegoBrackeen/src/com/brackeen/javagamebook/tilegame/TileMap.java</file>
+            <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/JuegoBrackeen/src/com/brackeen/javagamebook/tilegame/sprites/Person.java</file>
             <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/JuegoBrackeen/src/images/music2.png</file>
             <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/JuegoBrackeen/src/maps/map1.txt</file>
             <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/JuegoBrackeen/src/images/fly3.png</file>
@@ -20,22 +24,28 @@
             <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/JuegoBrackeen/src/images/powerup3.png</file>
             <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/JuegoBrackeen/src/images/star1.png</file>
             <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/JuegoBrackeen/src/images/heart1.png</file>
+            <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/JuegoBrackeen/src/sounds/music.midi</file>
             <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/JuegoBrackeen/src/images/fly2.png</file>
             <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/JuegoBrackeen/src/com/brackeen/javagamebook/graphics/Animation.java</file>
             <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/JuegoBrackeen/src/images/powerup4.png</file>
             <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/JuegoBrackeen/src/com/brackeen/javagamebook/tilegame/sprites/Player.java</file>
             <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/JuegoBrackeen/src/com/brackeen/javagamebook/tilegame/sprites/Grub.java</file>
+            <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/JuegoBrackeen/src/com/brackeen/javagamebook/sound/SoundFilter.java</file>
             <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/JuegoBrackeen/src/images/music1.png</file>
+            <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/JuegoBrackeen/src/com/brackeen/javagamebook/sound/FilteredSoundStream.java</file>
             <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/JuegoBrackeen/src/images/star2.png</file>
             <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/JuegoBrackeen/src/com/brackeen/javagamebook/graphics/Sprite.java</file>
             <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/JuegoBrackeen/src/images/grub1.png</file>
+            <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/JuegoBrackeen/src/images/person3Left1.png</file>
             <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/JuegoBrackeen/src/com/brackeen/javagamebook/input/GameAction.java</file>
             <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/JuegoBrackeen/src/com/brackeen/javagamebook/util/ThreadPool.java</file>
             <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/JuegoBrackeen/src/images/heart3.png</file>
             <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/JuegoBrackeen/src/com/brackeen/javagamebook/tilegame/sprites/Creature.java</file>
+            <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/JuegoBrackeen/src/com/brackeen/javagamebook/sound/FilterSequence.java</file>
             <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/JuegoBrackeen/src/com/brackeen/javagamebook/graphics/NullRepaintManager.java</file>
             <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/JuegoBrackeen/src/com/brackeen/javagamebook/graphics/ScreenManager.java</file>
             <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/JuegoBrackeen/src/com/brackeen/javagamebook/test/GameCore.java</file>
+            <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/JuegoBrackeen/src/com/brackeen/javagamebook/sound/EchoFilter.java</file>
             <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/JuegoBrackeen/src/images/grub2.png</file>
             <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/JuegoBrackeen/src/com/brackeen/javagamebook/util/LoopingByteInputStream.java</file>
             <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/JuegoBrackeen/src/com/brackeen/javagamebook/tilegame/sprites/Fly.java</file>
