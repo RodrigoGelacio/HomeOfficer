@@ -8,8 +8,7 @@ package com.brackeen.javagamebook.tilegame.sprites;
 import com.brackeen.javagamebook.graphics.Animation;
 
 /**
- *
- * @author carol
+ * The Virus
  */
 public class Virus extends Creature{
     

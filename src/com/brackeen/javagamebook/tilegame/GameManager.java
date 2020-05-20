@@ -372,7 +372,17 @@ public class GameManager extends GameCore {
         Sprite collisionSprite = getSpriteCollision(player);
         if (collisionSprite instanceof PowerUp) {
             acquirePowerUp((PowerUp) collisionSprite);
-        } else if (collisionSprite instanceof Creature) {
+        } 
+        else if (collisionSprite instanceof Virus){
+            Creature badguy = (Creature) collisionSprite;
+            if(canKill){
+                //kill the badguy and make player bounce
+                soundManager.play(boopSound);
+                badguy.setState(Creature.STATE_DYING);
+                vidas--;
+            }
+        }
+        else if (collisionSprite instanceof Person) {
             Creature badguy = (Creature) collisionSprite;
             if (canKill) {
                 // kill the badguy and make player bounce
