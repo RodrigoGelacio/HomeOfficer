@@ -268,8 +268,10 @@ public class GameManager extends GameCore {
 
 
         // player is dead! start map over
-        if (player.getState() == Creature.STATE_DEAD) {
+        if (vidas <= 0) {
             map = resourceManager.reloadMap();
+            vidas = 3;
+            score = 0;
             return;
         }
 
@@ -392,7 +394,7 @@ public class GameManager extends GameCore {
                 //player.setY(badguy.getY() - player.getHeight());
                // player.jump(true);
             }
-            else {
+            else if(vidas<=0) {
                 // player dies!
                 player.setState(Creature.STATE_DYING);
             }
