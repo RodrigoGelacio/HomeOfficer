@@ -20,9 +20,12 @@ import com.brackeen.javagamebook.tilegame.sprites.*;
 public class GameManager extends GameCore {
 
     public static void main(String[] args) {
+        SoundManager soundManager = new SoundManager(PLAYBACK_FORMAT);
+        Sound sound = soundManager.getSound("src/sounds/ouch2.wav");
+        soundManager.play(sound);
         new GameManager().run();
     }
-
+    
     // uncompressed, 44100Hz, 16-bit, mono, signed, little-endian
     private static final AudioFormat PLAYBACK_FORMAT
             = new AudioFormat(44100, 16, 1, true, false);
@@ -74,7 +77,7 @@ public class GameManager extends GameCore {
 
         // load sounds
         soundManager = new SoundManager(PLAYBACK_FORMAT);
-        personCaptured = soundManager.getSound("src/sounds/ouch.wav");
+        personCaptured = soundManager.getSound("src/sounds/ouch2.wav");
         boopSound = soundManager.getSound("src/sounds/boop2.wav");
 
         // start music

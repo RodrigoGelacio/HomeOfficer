@@ -147,12 +147,14 @@ public class SoundManager extends ThreadPool {
         if (audioStream == null) {
             return null;
         }
-
+        
+        System.out.println(audioStream.getFrameLength() + " que pedo aqui esta el merengue");
         // get the number of bytes to read
         int length = (int)(audioStream.getFrameLength() *
             audioStream.getFormat().getFrameSize());
 
         // read the entire stream
+        
         byte[] samples = new byte[length];
         DataInputStream is = new DataInputStream(audioStream);
         try {
@@ -238,7 +240,6 @@ public class SoundManager extends ThreadPool {
                     sound.getSamples());
             }
             else {
-                System.out.println("QUE PEDO SI FUNCIONA");
                 is = new ByteArrayInputStream(sound.getSamples());
                 
             }
