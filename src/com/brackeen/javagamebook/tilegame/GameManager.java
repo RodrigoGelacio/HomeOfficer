@@ -20,12 +20,10 @@ import com.brackeen.javagamebook.tilegame.sprites.*;
 public class GameManager extends GameCore {
 
     public static void main(String[] args) {
-        SoundManager soundManager = new SoundManager(PLAYBACK_FORMAT);
-        Sound sound = soundManager.getSound("src/sounds/ouch2.wav");
-        soundManager.play(sound);
+
         new GameManager().run();
     }
-    
+
     // uncompressed, 44100Hz, 16-bit, mono, signed, little-endian
     private static final AudioFormat PLAYBACK_FORMAT
             = new AudioFormat(44100, 16, 1, true, false);
@@ -36,6 +34,7 @@ public class GameManager extends GameCore {
 
     private Point pointCache = new Point();
     private TileMap map;
+    private SoundClipped[] ouchSounds;
     private MidiPlayer midiPlayer;
     private SoundManager soundManager;
     private ResourceManager resourceManager;
@@ -50,10 +49,10 @@ public class GameManager extends GameCore {
     private GameAction moveDown;
     private GameAction jump;
     private GameAction exit;
-    
+
     private int vidas;
     private int score;
-    
+
     public void init() {
         super.init();
 
@@ -62,7 +61,7 @@ public class GameManager extends GameCore {
 
         vidas = 3;
         score = 0;
-        
+
         // start resource manager
         resourceManager = new ResourceManager(
                 screen.getFullScreenWindow().getGraphicsConfiguration());
@@ -76,9 +75,14 @@ public class GameManager extends GameCore {
         map = resourceManager.loadNextMap();
 
         // load sounds
-        soundManager = new SoundManager(PLAYBACK_FORMAT);
-        personCaptured = soundManager.getSound("src/sounds/ouch2.wav");
-        boopSound = soundManager.getSound("src/sounds/boop2.wav");
+        ouchSounds = new SoundClipped[4];
+        for (int i = 0; i < 4; i++) {
+            String number = new String(Integer.toString(i+1));
+            ouchSounds[i] = new SoundClipped("/sounds/ouch" + number + ".wav");
+        }
+        // soundManager = new SoundManager(PLAYBACK_FORMAT);
+        // personCaptured = soundManager.getSound("src/sounds/ouch.wav");
+        //boopSound = soundManager.getSound("src/sounds/boop2.wav");
 
         // start music
         midiPlayer = new MidiPlayer();
@@ -152,7 +156,7 @@ public class GameManager extends GameCore {
         g.setFont(new Font("Tahoma", Font.BOLD, 20));
         g.setColor(Color.BLUE);
         g.drawString("Vidas: " + vidas, 10, screen.getHeight() - 10);
-        g.drawString("Score: " + score , 10, screen.getHeight() - 30);
+        g.drawString("Score: " + score, 10, screen.getHeight() - 30);
     }
 
     /**
@@ -265,10 +269,8 @@ public class GameManager extends GameCore {
      * map.
      */
     public void update(long elapsedTime) {
-        
-        
-        Creature player = (Creature)map.getPlayer();
 
+        Creature player = (Creature) map.getPlayer();
 
         // player is dead! start map over
         if (player.getState() == Creature.STATE_DEAD) {
@@ -333,7 +335,7 @@ public class GameManager extends GameCore {
             creature.collideHorizontal();
         }
         if (creature instanceof Player) {
-            checkPlayerCollision((Player)creature, true);
+            checkPlayerCollision((Player) creature, true);
         }
 
         // change y
@@ -379,13 +381,15 @@ public class GameManager extends GameCore {
             Creature badguy = (Creature) collisionSprite;
             if (canKill) {
                 // kill the badguy and make player bounce
-                soundManager.play(personCaptured);
+                
+                int rand = (int)(Math.random() * (4));
+                System.out.println(rand);
+                ouchSounds[rand].play();
                 badguy.setState(Creature.STATE_DYING);
-                score+=10;
+                score += 10;
                 //player.setY(badguy.getY() - player.getHeight());
-               // player.jump(true);
-            }
-            else {
+                // player.jump(true);
+            } else {
                 // player dies!
                 player.setState(Creature.STATE_DYING);
             }
