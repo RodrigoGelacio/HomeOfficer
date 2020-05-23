@@ -20,6 +20,7 @@ import com.brackeen.javagamebook.tilegame.sprites.*;
 public class GameManager extends GameCore {
 
     public static void main(String[] args) {
+
         new GameManager().run();
     }
 
@@ -33,10 +34,11 @@ public class GameManager extends GameCore {
 
     private Point pointCache = new Point();
     private TileMap map;
+    private SoundClipped[] ouchSounds;
     private MidiPlayer midiPlayer;
     private SoundManager soundManager;
     private ResourceManager resourceManager;
-    private Sound prizeSound;
+    private Sound personCaptured;
     private Sound boopSound;
     private InputManager inputManager;
     private TileMapRenderer renderer;
@@ -47,10 +49,10 @@ public class GameManager extends GameCore {
     private GameAction moveDown;
     private GameAction jump;
     private GameAction exit;
-    
+
     private int vidas;
     private int score;
-    
+
     public void init() {
         super.init();
 
@@ -59,7 +61,7 @@ public class GameManager extends GameCore {
 
         vidas = 3;
         score = 0;
-        
+
         // start resource manager
         resourceManager = new ResourceManager(
                 screen.getFullScreenWindow().getGraphicsConfiguration());
@@ -73,9 +75,14 @@ public class GameManager extends GameCore {
         map = resourceManager.loadNextMap();
 
         // load sounds
-        soundManager = new SoundManager(PLAYBACK_FORMAT);
-        prizeSound = soundManager.getSound("src/sounds/prize.wav");
-        boopSound = soundManager.getSound("src/sounds/boop2.wav");
+        ouchSounds = new SoundClipped[4];
+        for (int i = 0; i < 4; i++) {
+            String number = new String(Integer.toString(i+1));
+            ouchSounds[i] = new SoundClipped("/sounds/ouch" + number + ".wav");
+        }
+        // soundManager = new SoundManager(PLAYBACK_FORMAT);
+        // personCaptured = soundManager.getSound("src/sounds/ouch.wav");
+        //boopSound = soundManager.getSound("src/sounds/boop2.wav");
 
         // start music
         midiPlayer = new MidiPlayer();
@@ -149,7 +156,7 @@ public class GameManager extends GameCore {
         g.setFont(new Font("Tahoma", Font.BOLD, 20));
         g.setColor(Color.BLUE);
         g.drawString("Vidas: " + vidas, 10, screen.getHeight() - 10);
-        g.drawString("Score: " + score , 10, screen.getHeight() - 30);
+        g.drawString("Score: " + score, 10, screen.getHeight() - 30);
     }
 
     /**
@@ -262,10 +269,8 @@ public class GameManager extends GameCore {
      * map.
      */
     public void update(long elapsedTime) {
-        
-        
-        Creature player = (Creature)map.getPlayer();
 
+        Creature player = (Creature) map.getPlayer();
 
         // player is dead! start map over
         if (vidas <= 0) {
@@ -332,7 +337,7 @@ public class GameManager extends GameCore {
             creature.collideHorizontal();
         }
         if (creature instanceof Player) {
-            checkPlayerCollision((Player)creature, true);
+            checkPlayerCollision((Player) creature, true);
         }
 
         // change y
@@ -388,13 +393,21 @@ public class GameManager extends GameCore {
             Creature badguy = (Creature) collisionSprite;
             if (canKill) {
                 // kill the badguy and make player bounce
-                soundManager.play(boopSound);
+                
+                int rand = (int)(Math.random() * (4));
+                System.out.println(rand);
+                ouchSounds[rand].play();
                 badguy.setState(Creature.STATE_DYING);
-                score+=10;
+                score += 10;
                 //player.setY(badguy.getY() - player.getHeight());
+<<<<<<< HEAD
                // player.jump(true);
             }
             else if(vidas<=0) {
+=======
+                // player.jump(true);
+            } else {
+>>>>>>> CollisionSounds
                 // player dies!
                 player.setState(Creature.STATE_DYING);
             }
@@ -410,14 +423,14 @@ public class GameManager extends GameCore {
 
         if (powerUp instanceof PowerUp.Star) {
             // do something here, like give the player points
-            soundManager.play(prizeSound);
+            soundManager.play(personCaptured);
         } else if (powerUp instanceof PowerUp.Music) {
             // change the music
-            soundManager.play(prizeSound);
+            soundManager.play(personCaptured);
             toggleDrumPlayback();
         } else if (powerUp instanceof PowerUp.Goal) {
             // advance to next map
-            soundManager.play(prizeSound,
+            soundManager.play(personCaptured,
                     new EchoFilter(2000, .7f), false);
             map = resourceManager.loadNextMap();
         }
