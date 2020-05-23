@@ -384,7 +384,7 @@ public class GameManager extends GameCore {
             Creature badguy = (Creature) collisionSprite;
             if(canKill){
                 //kill the badguy and make player bounce
-                soundManager.play(boopSound);
+                //soundManager.play(boopSound);
                 badguy.setState(Creature.STATE_DYING);
                 vidas--;
             }
@@ -400,14 +400,11 @@ public class GameManager extends GameCore {
                 badguy.setState(Creature.STATE_DYING);
                 score += 10;
                 //player.setY(badguy.getY() - player.getHeight());
-<<<<<<< HEAD
                // player.jump(true);
             }
             else if(vidas<=0) {
-=======
                 // player.jump(true);
             } else {
->>>>>>> CollisionSounds
                 // player dies!
                 player.setState(Creature.STATE_DYING);
             }
