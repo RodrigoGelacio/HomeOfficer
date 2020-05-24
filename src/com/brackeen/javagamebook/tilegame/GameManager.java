@@ -50,8 +50,10 @@ public class GameManager extends GameCore {
     private GameAction jump;
     private GameAction exit;
     private GameAction pause;
+    private GameAction Pause;
     private GameAction controls;
     private boolean bPause = false;
+    private boolean bPauseMenu = false;
     private boolean bControls = false;
     private boolean bExit = false;
 
@@ -178,7 +180,7 @@ public class GameManager extends GameCore {
         g.setColor(Color.BLUE);
         g.drawString("Vidas: " + vidas, 10, screen.getHeight() - 10);
         g.drawString("Score: " + score, 10, screen.getHeight() - 30);
-        if(bPause){
+        if(bPauseMenu){
             g.drawImage(renderer.Pause, screen.getWidth()/2 - 250, screen.getHeight()/2-250, 500, 500, null);
         }
         
@@ -298,29 +300,42 @@ public class GameManager extends GameCore {
      * map.
      */
     public void update(long elapsedTime) {
-
-        Creature player = (Creature) map.getPlayer();
-
-        // player is dead! start map over
-        if (vidas <= 0) {
-            map = resourceManager.reloadMap();
-            vidas = 3;
-            score = 0;
-            return;
+        if(bPause){
+            //check keyboard/input
+            checkInput(elapsedTime);
+            //pause music
+            midiPlayer.setPaused(true);
+            
+            if(controls.isPressed()){
+                if(!bControls){
+                    bControls = true;
+                    bPauseMenu = false;
+                }else{
+                    bControls = false;
+                    bPauseMenu = true;
+                }
+            }
+            if(pause.isPressed()){
+                bPause = false;
+                bPauseMenu = false;
+            }
         }
-        
-        
-        
-        if(pause.isPressed()){
+        if(!bPause){
+            
+            if(pause.isPressed()){
             if(bPause){
                 bPause = false;
+                
                 // Make the cursor invisible
                 //inputManager.setCursor(InputManager.INVISIBLE_CURSOR);
             }else{
+                bPauseMenu = true;
                 bPause = true;
                 //Make the cursor visible
                 //inputManager.setCursor(Cursor.getDefaultCursor());
             }
+            
+            
         }
         
         if(controls.isPressed()){
@@ -332,27 +347,40 @@ public class GameManager extends GameCore {
                 bPause = true;
             }
         }
-        // get keyboard/mouse input
-        checkInput(elapsedTime);
+            //play music
+            midiPlayer.setPaused(false);
+            Creature player = (Creature) map.getPlayer();
 
-        // update player
-        updateCreature(player, elapsedTime);
-        player.update(elapsedTime);
-
-        // update other sprites
-        Iterator i = map.getSprites();
-        while (i.hasNext()) {
-            Sprite sprite = (Sprite) i.next();
-            if (sprite instanceof Creature) {
-                Creature creature = (Creature) sprite;
-                if (creature.getState() == Creature.STATE_DEAD) {
-                    i.remove();
-                } else {
-                    updateCreature(creature, elapsedTime);
-                }
+            // player is dead! start map over
+            if (vidas <= 0) {
+                map = resourceManager.reloadMap();
+                vidas = 3;
+                score = 0;
+                return;
             }
-            // normal update
-            sprite.update(elapsedTime);
+            
+            // get keyboard/mouse input
+            checkInput(elapsedTime);
+
+            // update player
+            updateCreature(player, elapsedTime);
+            player.update(elapsedTime);
+
+            // update other sprites
+            Iterator i = map.getSprites();
+            while (i.hasNext()) {
+                Sprite sprite = (Sprite) i.next();
+                if (sprite instanceof Creature) {
+                    Creature creature = (Creature) sprite;
+                    if (creature.getState() == Creature.STATE_DEAD) {
+                        i.remove();
+                    } else {
+                        updateCreature(creature, elapsedTime);
+                    }
+                }
+                // normal update
+                sprite.update(elapsedTime);
+            }
         }
     }
 

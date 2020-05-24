@@ -13,6 +13,7 @@ import com.brackeen.javagamebook.graphics.Animation;
 public class Virus extends Creature{
     
     Player player;
+    public static final float SPEED = 0.3f;
     
     public Virus(Animation left, Animation right, Animation up, Animation down, Animation deadLeft, Animation deadRight) {
         super(left, right, up, down, deadLeft, deadRight);
