@@ -49,9 +49,11 @@ public class GameManager extends GameCore {
     private GameAction moveDown;
     private GameAction jump;
     private GameAction exit;
+    private GameAction pause;
 
     private int vidas;
     private int score;
+    private boolean paused;
 
     public void init() {
         super.init();
@@ -61,6 +63,7 @@ public class GameManager extends GameCore {
 
         vidas = 3;
         score = 0;
+        paused = false;
 
         // start resource manager
         resourceManager = new ResourceManager(
@@ -110,6 +113,8 @@ public class GameManager extends GameCore {
                 GameAction.DETECT_INITAL_PRESS_ONLY);
         exit = new GameAction("exit",
                 GameAction.DETECT_INITAL_PRESS_ONLY);
+        pause = new GameAction("pause",
+                GameAction.DETECT_INITAL_PRESS_ONLY);
 
         inputManager = new InputManager(
                 screen.getFullScreenWindow());
@@ -120,12 +125,17 @@ public class GameManager extends GameCore {
         inputManager.mapToKey(moveUp, KeyEvent.VK_UP);
         inputManager.mapToKey(moveDown, KeyEvent.VK_DOWN);
         inputManager.mapToKey(exit, KeyEvent.VK_ESCAPE);
+        inputManager.mapToKey(pause, KeyEvent.VK_SPACE);
     }
 
     private void checkInput(long elapsedTime) {
 
         if (exit.isPressed()) {
             stop();
+        }
+        
+        if(pause.isPressed()){
+            paused = !paused;
         }
 
         Player player = (Player) map.getPlayer();
@@ -269,38 +279,47 @@ public class GameManager extends GameCore {
      * map.
      */
     public void update(long elapsedTime) {
-
-        Creature player = (Creature) map.getPlayer();
-
-        // player is dead! start map over
-        if (vidas <= 0) {
-            map = resourceManager.reloadMap();
-            vidas = 3;
-            score = 0;
-            return;
+        if(paused){
+            //check keyboard/input
+            checkInput(elapsedTime);
+            //pause music
+            midiPlayer.setPaused(true);
         }
+        if(!paused){
+            //play music
+            midiPlayer.setPaused(false);
+            Creature player = (Creature) map.getPlayer();
 
-        // get keyboard/mouse input
-        checkInput(elapsedTime);
-
-        // update player
-        updateCreature(player, elapsedTime);
-        player.update(elapsedTime);
-
-        // update other sprites
-        Iterator i = map.getSprites();
-        while (i.hasNext()) {
-            Sprite sprite = (Sprite) i.next();
-            if (sprite instanceof Creature) {
-                Creature creature = (Creature) sprite;
-                if (creature.getState() == Creature.STATE_DEAD) {
-                    i.remove();
-                } else {
-                    updateCreature(creature, elapsedTime);
-                }
+            // player is dead! start map over
+            if (vidas <= 0) {
+                map = resourceManager.reloadMap();
+                vidas = 3;
+                score = 0;
+                return;
             }
-            // normal update
-            sprite.update(elapsedTime);
+            
+            // get keyboard/mouse input
+            checkInput(elapsedTime);
+
+            // update player
+            updateCreature(player, elapsedTime);
+            player.update(elapsedTime);
+
+            // update other sprites
+            Iterator i = map.getSprites();
+            while (i.hasNext()) {
+                Sprite sprite = (Sprite) i.next();
+                if (sprite instanceof Creature) {
+                    Creature creature = (Creature) sprite;
+                    if (creature.getState() == Creature.STATE_DEAD) {
+                        i.remove();
+                    } else {
+                        updateCreature(creature, elapsedTime);
+                    }
+                }
+                // normal update
+                sprite.update(elapsedTime);
+            }
         }
     }
 
