@@ -50,10 +50,15 @@ public class GameManager extends GameCore {
     private GameAction jump;
     private GameAction exit;
     private GameAction pause;
+    private GameAction Pause;
+    private GameAction controls;
+    private boolean bPause = false;
+    private boolean bPauseMenu = false;
+    private boolean bControls = false;
+    private boolean bExit = false;
 
     private int vidas;
     private int score;
-    private boolean paused;
 
     public void init() {
         super.init();
@@ -63,7 +68,6 @@ public class GameManager extends GameCore {
 
         vidas = 3;
         score = 0;
-        paused = false;
 
         // start resource manager
         resourceManager = new ResourceManager(
@@ -73,6 +77,12 @@ public class GameManager extends GameCore {
         renderer = new TileMapRenderer();
         renderer.setBackground(
                 resourceManager.loadImage("concrete.jpg"));
+        
+        renderer.setPause(
+                resourceManager.loadImage("PauseMenu.png"));
+        
+        renderer.setControls(
+                resourceManager.loadImage("ControlsMenu.png"));
 
         // load first map
         map = resourceManager.loadNextMap();
@@ -113,7 +123,10 @@ public class GameManager extends GameCore {
                 GameAction.DETECT_INITAL_PRESS_ONLY);
         exit = new GameAction("exit",
                 GameAction.DETECT_INITAL_PRESS_ONLY);
+        
         pause = new GameAction("pause",
+                GameAction.DETECT_INITAL_PRESS_ONLY);
+        controls = new GameAction("controls",
                 GameAction.DETECT_INITAL_PRESS_ONLY);
 
         inputManager = new InputManager(
@@ -125,19 +138,19 @@ public class GameManager extends GameCore {
         inputManager.mapToKey(moveUp, KeyEvent.VK_UP);
         inputManager.mapToKey(moveDown, KeyEvent.VK_DOWN);
         inputManager.mapToKey(exit, KeyEvent.VK_ESCAPE);
-        inputManager.mapToKey(pause, KeyEvent.VK_SPACE);
+        inputManager.mapToKey(pause, KeyEvent.VK_P);
+        inputManager.mapToKey(controls, KeyEvent.VK_H);
     }
 
     private void checkInput(long elapsedTime) {
-
-        if (exit.isPressed()) {
-            stop();
+        if(bPause){
+            if (exit.isPressed()) {
+                bExit = true;
+                if(bExit){
+                    stop();
+                }
+            }
         }
-        
-        if(pause.isPressed()){
-            paused = !paused;
-        }
-
         Player player = (Player) map.getPlayer();
         if (player.isAlive()) {
             float velocityX = 0;
@@ -167,6 +180,14 @@ public class GameManager extends GameCore {
         g.setColor(Color.BLUE);
         g.drawString("Vidas: " + vidas, 10, screen.getHeight() - 10);
         g.drawString("Score: " + score, 10, screen.getHeight() - 30);
+        if(bPauseMenu){
+            g.drawImage(renderer.Pause, screen.getWidth()/2 - 250, screen.getHeight()/2-250, 500, 500, null);
+        }
+        
+        if(bControls){
+                g.drawImage(renderer.Controls, screen.getWidth()/2 - 250, screen.getHeight()/2-250, 500, 500, null);
+            }
+        
     }
 
     /**
@@ -279,13 +300,53 @@ public class GameManager extends GameCore {
      * map.
      */
     public void update(long elapsedTime) {
-        if(paused){
+        if(bPause){
             //check keyboard/input
             checkInput(elapsedTime);
             //pause music
             midiPlayer.setPaused(true);
+            
+            if(controls.isPressed()){
+                if(!bControls){
+                    bControls = true;
+                    bPauseMenu = false;
+                }else{
+                    bControls = false;
+                    bPauseMenu = true;
+                }
+            }
+            if(pause.isPressed()){
+                bPause = false;
+                bPauseMenu = false;
+            }
         }
-        if(!paused){
+        if(!bPause){
+            
+            if(pause.isPressed()){
+            if(bPause){
+                bPause = false;
+                
+                // Make the cursor invisible
+                //inputManager.setCursor(InputManager.INVISIBLE_CURSOR);
+            }else{
+                bPauseMenu = true;
+                bPause = true;
+                //Make the cursor visible
+                //inputManager.setCursor(Cursor.getDefaultCursor());
+            }
+            
+            
+        }
+        
+        if(controls.isPressed()){
+            if(!bControls){
+               bControls = true;
+               bPause = false;
+            }else{
+                bControls = false;
+                bPause = true;
+            }
+        }
             //play music
             midiPlayer.setPaused(false);
             Creature player = (Creature) map.getPlayer();
