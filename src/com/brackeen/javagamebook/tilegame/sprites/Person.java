@@ -13,6 +13,8 @@ import com.brackeen.javagamebook.graphics.Animation;
  */
 public class Person extends Creature{
     
+    public static final float SPEED = 0.2f;
+    
     public Person(Animation left, Animation right, Animation up, Animation down,
             Animation deadLeft, Animation deadRight) {
         super(left, right, up, down, deadLeft, deadRight);

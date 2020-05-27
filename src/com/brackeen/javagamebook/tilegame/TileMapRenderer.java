@@ -28,6 +28,8 @@ public class TileMapRenderer {
     private static final int TILE_SIZE_BITS = 6;
 
     private Image background;
+    public Image Pause;
+    public Image Controls;
 
     /**
         Converts a pixel position to a tile position.
@@ -71,7 +73,13 @@ public class TileMapRenderer {
         this.background = background;
     }
 
+    public void setPause(Image Pause) {
+        this.Pause = Pause;
+    }
 
+    public void setControls(Image Controls) {
+        this.Controls = Controls;
+    }
     /**
         Draws the specified TileMap.
     */
@@ -114,7 +122,7 @@ public class TileMapRenderer {
 
             g.drawImage(background, x, y, null);
         }
-
+        
         // draw the visible tiles
         int firstTileX = pixelsToTiles(-offsetX);
         int lastTileX = firstTileX +
