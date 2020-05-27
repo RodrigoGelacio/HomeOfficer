@@ -76,7 +76,7 @@ public class GameManager extends GameCore {
         // load resources
         renderer = new TileMapRenderer();
         renderer.setBackground(
-                resourceManager.loadImage("concrete.jpg"));
+                resourceManager.loadImage("map1.jpg"));
         
         renderer.setPause(
                 resourceManager.loadImage("PauseMenu.png"));

@@ -265,11 +265,6 @@ public class ResourceManager {
             loadImage("playerLeft1.png"),
             loadImage("playerLeft2.png"),
             loadImage("playerLeft3.png"),
-            loadImage("fly1.png"),
-            loadImage("fly2.png"),
-            loadImage("fly3.png"),
-            loadImage("grub1.png"),
-            loadImage("grub2.png"),
             loadImage("person1Left1.png"),
             loadImage("person1Left2.png"),
             loadImage("person1Left3.png"),
@@ -369,30 +364,25 @@ public class ResourceManager {
         Animation[] person4Anim = new Animation[6];
         Animation[] person5Anim = new Animation[6];
         Animation[] person6Anim = new Animation[6];
-        Animation[] flyAnim = new Animation[6];
-        Animation[] grubAnim = new Animation[6];
         Animation[] virusAnim = new Animation[6];
         for (int i=0; i<4; i++) {
             playerAnim[i] = createPlayerAnim(
                 imagesHorizontal[i][0], imagesHorizontal[i][1], imagesHorizontal[i][2]);
-            flyAnim[i] = createFlyAnim(
-                imagesHorizontal[i][3], imagesHorizontal[i][4], imagesHorizontal[i][5]);
-            grubAnim[i] = createGrubAnim(
-                imagesHorizontal[i][6], imagesHorizontal[i][7]);
+            
             person1Anim[i] = createPersonAnim(
-                imagesHorizontal[i][8], imagesHorizontal[i][9], imagesHorizontal[i][10]);
+                imagesHorizontal[i][3], imagesHorizontal[i][4], imagesHorizontal[i][5]);
             person2Anim[i] = createPersonAnim(
-                imagesHorizontal[i][11], imagesHorizontal[i][12], imagesHorizontal[i][13]);
+                imagesHorizontal[i][6], imagesHorizontal[i][7], imagesHorizontal[i][8]);
             person3Anim[i] = createPersonAnim(
-                imagesHorizontal[i][14], imagesHorizontal[i][15], imagesHorizontal[i][16]);
+                imagesHorizontal[i][9], imagesHorizontal[i][10], imagesHorizontal[i][11]);
             person4Anim[i] = createPersonAnim(
-                imagesHorizontal[i][17], imagesHorizontal[i][18], imagesHorizontal[i][19]);
+                imagesHorizontal[i][12], imagesHorizontal[i][13], imagesHorizontal[i][14]);
             person5Anim[i] = createPersonAnim(
-                imagesHorizontal[i][20], imagesHorizontal[i][21], imagesHorizontal[i][22]);
+                imagesHorizontal[i][15], imagesHorizontal[i][16], imagesHorizontal[i][17]);
             person6Anim[i] = createPersonAnim(
-                imagesHorizontal[i][23], imagesHorizontal[i][24], imagesHorizontal[i][25]);  
+                imagesHorizontal[i][18], imagesHorizontal[i][19], imagesHorizontal[i][20]);  
             virusAnim[i] = createPersonAnim(
-                imagesHorizontal[i][26], imagesHorizontal[i][27], imagesHorizontal[i][28]);
+                imagesHorizontal[i][21], imagesHorizontal[i][22], imagesHorizontal[i][23]);
         }
         
         playerAnim[4] = createPlayerAnim(imagesUp[0][0], imagesUp[0][1],imagesUp[0][2]);
@@ -415,10 +405,6 @@ public class ResourceManager {
         // create creature sprites
         playerSprite = new Player(playerAnim[0], playerAnim[1], playerAnim[4], playerAnim[5],
             playerAnim[2], playerAnim[3]);
-        flySprite = new Fly(flyAnim[0], flyAnim[1],flyAnim[0], flyAnim[1],
-            flyAnim[2], flyAnim[3]);
-        grubSprite = new Grub(grubAnim[0], grubAnim[1],grubAnim[0], grubAnim[1],
-            grubAnim[2], grubAnim[3]);
         person1Sprite = new Person(person1Anim[0], person1Anim[1], person1Anim[4], person1Anim[5], 
                 person1Anim[2], person1Anim[3]);
         person2Sprite = new Person(person2Anim[0], person2Anim[1], person2Anim[4], person2Anim[5], 
