@@ -13,13 +13,13 @@ public abstract class Creature extends Sprite {
     /**
         Amount of time to go from STATE_DYING to STATE_DEAD.
     */
-    private static final int DIE_TIME = 1000;
+    private static final int DIE_TIME = 500;
 
     public static final int STATE_NORMAL = 0;
     public static final int STATE_DYING = 1;
     public static final int STATE_DEAD = 2;
     
-    public static float SPEED = 0.3f;
+    private float SPEED;
 
     private Animation left;
     private Animation right;
@@ -44,6 +44,7 @@ public abstract class Creature extends Sprite {
         this.deadLeft = deadLeft;
         this.deadRight = deadRight;
         state = STATE_NORMAL;
+        SPEED = .3f;
     }
 
 
@@ -72,9 +73,8 @@ public abstract class Creature extends Sprite {
         Gets the maximum speed of this Creature.
     */
     public float getMaxSpeed() {
-        return 0;
+        return SPEED;
     }
-
 
     /**
         Wakes up the creature when the Creature first appears

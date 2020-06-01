@@ -56,9 +56,12 @@ public class GameManager extends GameCore {
     private boolean bPauseMenu = false;
     private boolean bControls = false;
     private boolean bExit = false;
+    private boolean controlTackleY = true;
+    private boolean controlTackleX = true;
 
     private int vidas;
     private int score;
+    private int mapCounter;
 
     public void init() {
         super.init();
@@ -66,6 +69,7 @@ public class GameManager extends GameCore {
         // set up input manager
         initInput();
 
+        mapCounter=1;
         vidas = 3;
         score = 0;
 
@@ -274,6 +278,33 @@ public class GameManager extends GameCore {
                 && s1y < s2y + s2.getHeight()
                 && s2y < s1y + s1.getHeight());
     }
+    
+    public boolean isCollisionTackle(Sprite s1, Sprite s2) {
+        // if the Sprites are the same, return false
+        if (s1 == s2) {
+            return false;
+        }
+
+        // if one of the Sprites is a dead Creature, return false
+        if (s1 instanceof Creature && !((Creature) s1).isAlive()) {
+            return false;
+        }
+        if (s2 instanceof Creature && !((Creature) s2).isAlive()) {
+            return false;
+        }
+
+        // get the pixel location of the Sprites
+        int s1x = Math.round(s1.getX());
+        int s1y = Math.round(s1.getY());
+        int s2x = Math.round(s2.getX());
+        int s2y = Math.round(s2.getY());
+
+        // check if the two sprites' boundaries intersect
+        return (s1x-200 < s2x + s2.getWidth()
+                && s2x < s1x + s1.getWidth()+100
+                && s1y-200 < s2y + s2.getHeight()
+                && s2y < s1y + s1.getHeight()+100);
+    }
 
     /**
      * Gets the Sprite that collides with the specified Sprite, or null if no
@@ -382,6 +413,7 @@ public class GameManager extends GameCore {
                 sprite.update(elapsedTime);
             }
         }
+        
     }
 
     /**
@@ -391,19 +423,34 @@ public class GameManager extends GameCore {
     private void updateCreature(Creature creature,
             long elapsedTime) {
 
-        // apply gravity
-        /*if (!creature.isFlying()) {
-            creature.setVelocityY(creature.getVelocityY() +
-                GRAVITY * elapsedTime);
-        }*/
-        // change x
         float dx = creature.getVelocityX();
         float oldX = creature.getX();
         float newX = oldX + dx * elapsedTime;
         Point tile
                 = getTileCollision(creature, newX, creature.getY());
         if (tile == null) {
-            creature.setX(newX);
+            if(creature instanceof Virus){
+            Creature player = (Creature) map.getPlayer();
+               if(isCollisionTackle(creature,player)) {
+                   if(player.getX() < creature.getX() && controlTackleX){
+                   creature.setVelocityX(-.4f);    
+                   controlTackleX = false;
+                   }
+                   else if(controlTackleX){
+                     creature.setVelocityX(.4f);
+                     controlTackleX = false;
+                   }
+                   
+               }
+               else{
+                  controlTackleX = true;
+                  ((Virus) creature).setMaxSpeed(.2f);
+                  
+                }
+            
+            }
+                creature.setX(newX);
+            
         } else {
             // line up with the tile boundary
             if (dx > 0) {
@@ -426,7 +473,27 @@ public class GameManager extends GameCore {
         float newY = oldY + dy * elapsedTime;
         tile = getTileCollision(creature, creature.getX(), newY);
         if (tile == null) {
-            creature.setY(newY);
+            if(creature instanceof Virus){
+            Creature player = (Creature) map.getPlayer();
+               if(isCollisionTackle(creature,player)) {
+                   if(player.getY() < creature.getY() && controlTackleY){
+                   creature.setVelocityY(-.4f);
+                   controlTackleY = false;
+                   }
+                   else if(controlTackleY){
+                     creature.setVelocityY(.4f);
+                     controlTackleY = false;
+                   }
+                   
+               }
+                else{
+                controlTackleY = true;
+                ((Virus) creature).setMaxSpeed(.2f);
+               }
+            }
+          creature.setY(newY);
+            
+            
         } else {
             // line up with the tile boundary
             if (dy > 0) {
@@ -442,6 +509,8 @@ public class GameManager extends GameCore {
         if (creature instanceof Player) {
             checkPlayerCollision((Player) creature, true);
         }
+        
+        
 
     }
 
@@ -479,6 +548,9 @@ public class GameManager extends GameCore {
                 ouchSounds[rand].play();
                 badguy.setState(Creature.STATE_DYING);
                 score += 10;
+                //map = resourceManager.loadNextMap();
+                //renderer.setBackground(
+                //resourceManager.loadImage("map" + ++mapCounter +".jpg"));
                 //player.setY(badguy.getY() - player.getHeight());
                // player.jump(true);
             }
@@ -510,6 +582,7 @@ public class GameManager extends GameCore {
             soundManager.play(personCaptured,
                     new EchoFilter(2000, .7f), false);
             map = resourceManager.loadNextMap();
+            
         }
     }
 
