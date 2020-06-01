@@ -1,0 +1,42 @@
+# Map file for tile-based game
+# (Lines that start with '#' are comments)
+# The tiles are:
+#   (Space) Empty tile
+#   A..Z    Tiles A through Z
+#   o       Star
+#   !       Music Note
+#   *       Goal
+#   1       Person 1 
+#   2       Person 2
+#   3       Person 3
+#   4       Person 4
+#   5       Person 5
+#   6       Person 6 
+#   7       Virus
+
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+A                             F      F                                                   F                                                  A
+A                             F      F      FFFFFFFFFFFFFFFFFFFFFFFFF                    F                            FFFFFFFF              A
+A                             F      F      F                        F            F      F     FFFFFFFFF        F     FFFFFFFF              A
+A        F                   F       F      F             FFFFFF      F           F      F                      F     FFFFFFFF              A
+A        F                  F        F      F                  F      F           F      F                      F     FFFFFFFF              A
+A        F                 F         F      F                  F     F            F      F     FFFFFFFFF        F     FFFFFFFF              A
+A         F               F           F     F                 F     F             F      F             F        F     FFFFFFFF              A
+A          F             F             F     F               F     F              F      F             F        F     FFFFFFFF              A
+A           FFFFFFFFFFFFF               F     F             F     F               F      F             F        F     FFFFFFFF              A
+A                                        F     FFFFFFFFFFFFF     F                F      F             F        F     FFFFFFFF              A
+A                                         F                     F                 F      F       FFFFFFF        F     FFFFFFFF              A
+A                                          FFFFFFFFFFFFFFFFFFFFF                  F      F       F              F     FFFFFFFF              A
+A          FFFFFFFFFFFFFF                                                         F      F       F              F     FFFFFFFF              A         
+A         F              F                                                        F      F       F              F     FFFFFFFF              A
+A        F                F                 F                     F               F      F       FFFFFFFFFFFFFFFF     FFFFFFFF              A
+A       F                  F                 F                   F                F      FFF  FFFF                    FFFFFFFF              A
+A      F                    F                 F                 F                 F                       FFFFFFF     FFFFFFFF              A
+A     F                      F                 F               F                  F      FFFFFFFFFFFFF    F           FFFFFFFF              A
+A      F                F                                                         F      F           F    F           FFFFFFFF              A
+A       F              F                         F           F                    F      F                F           FFFFFFFF              A
+A        F            F                           F         F                     F      F           F    F           FFFFFFFF              A
+A         FFFFFFFFFFFF                             F       F                      F      F           F    F           FFFFFFFF              A  
+A                                                   F     F                       F      FFFFFFFFFFFFF    FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFA                       
+A                                                                                 F                                                         A
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA       

@@ -14,9 +14,14 @@ public class Virus extends Creature{
     
     Player player;
     private float SPEED = 0.3f;
+    private boolean controlVelocityX;
+    private boolean controlVelocityY;
+    
     
     public Virus(Animation left, Animation right, Animation up, Animation down, Animation deadLeft, Animation deadRight) {
         super(left, right, up, down, deadLeft, deadRight);
+        controlVelocityX = true;
+        controlVelocityY = true;
     }
     
     public float getMaxSpeed() {
@@ -28,24 +33,39 @@ public class Virus extends Creature{
         SPEED = f;
     }
   
-    
+   /* public void setVelocityX(float f){
+        this.velocityX = f;
+    }
     
     //To follow the player thorughout the map
-    public void setVelocityX(){
-        if (player.getX() > getX()){
-            setX(getX() + 1);
-        }
-        else if(player.getX() < getX()){
-            setX(getX() - 1);
-        }
+
+    public float getVelocityX() {
+        return velocityX;
+    }
+
+    public float getVelocityY() {
+        return velocityY;
+    }
+
+    public void setVelocityY(float velocityY) {
+        this.velocityY = velocityY;
+    }
+   */
+
+    public void setControlVelocityX(boolean controlVelocityX) {
+        this.controlVelocityX = controlVelocityX;
+    }
+
+    public void setControlVelocityY(boolean controlVelocityY) {
+        this.controlVelocityY = controlVelocityY;
+    }
+
+    public boolean isControlVelocityX() {
+        return controlVelocityX;
+    }
+
+    public boolean isControlVelocityY() {
+        return controlVelocityY;
     }
     
-    public void setVelocityY(){
-        if (player.getY() > getY()){
-            setY(getY() + 1);
-        }
-        else if (player.getY() < getY()){
-            setY(getY() - 1);
-        }
-    }
 }

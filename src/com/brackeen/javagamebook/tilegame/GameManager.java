@@ -56,8 +56,7 @@ public class GameManager extends GameCore {
     private boolean bPauseMenu = false;
     private boolean bControls = false;
     private boolean bExit = false;
-    private boolean controlTackleY = true;
-    private boolean controlTackleX = true;
+    private int controlTrack;
 
     private int vidas;
     private int score;
@@ -68,11 +67,12 @@ public class GameManager extends GameCore {
 
         // set up input manager
         initInput();
-
-        mapCounter=1;
+        
+        controlTrack=1;
+        mapCounter = 1;
         vidas = 3;
         score = 0;
-
+        
         // start resource manager
         resourceManager = new ResourceManager(
                 screen.getFullScreenWindow().getGraphicsConfiguration());
@@ -81,10 +81,10 @@ public class GameManager extends GameCore {
         renderer = new TileMapRenderer();
         renderer.setBackground(
                 resourceManager.loadImage("map1.jpg"));
-        
+
         renderer.setPause(
                 resourceManager.loadImage("PauseMenu.png"));
-        
+
         renderer.setControls(
                 resourceManager.loadImage("ControlsMenu.png"));
 
@@ -94,7 +94,7 @@ public class GameManager extends GameCore {
         // load sounds
         ouchSounds = new SoundClipped[4];
         for (int i = 0; i < 4; i++) {
-            String number = new String(Integer.toString(i+1));
+            String number = new String(Integer.toString(i + 1));
             ouchSounds[i] = new SoundClipped("/sounds/ouch" + number + ".wav");
         }
         // soundManager = new SoundManager(PLAYBACK_FORMAT);
@@ -104,7 +104,7 @@ public class GameManager extends GameCore {
         // start music
         midiPlayer = new MidiPlayer();
         Sequence sequence
-                = midiPlayer.getSequence("src/sounds/beast-attack.mid");
+                = midiPlayer.getSequence("src/sounds/song1.mid");
         midiPlayer.play(sequence, true);
         toggleDrumPlayback();
     }
@@ -127,7 +127,7 @@ public class GameManager extends GameCore {
                 GameAction.DETECT_INITAL_PRESS_ONLY);
         exit = new GameAction("exit",
                 GameAction.DETECT_INITAL_PRESS_ONLY);
-        
+
         pause = new GameAction("pause",
                 GameAction.DETECT_INITAL_PRESS_ONLY);
         controls = new GameAction("controls",
@@ -147,10 +147,10 @@ public class GameManager extends GameCore {
     }
 
     private void checkInput(long elapsedTime) {
-        if(bPause){
+        if (bPause) {
             if (exit.isPressed()) {
                 bExit = true;
-                if(bExit){
+                if (bExit) {
                     stop();
                 }
             }
@@ -184,14 +184,14 @@ public class GameManager extends GameCore {
         g.setColor(Color.BLUE);
         g.drawString("Vidas: " + vidas, 10, screen.getHeight() - 10);
         g.drawString("Score: " + score, 10, screen.getHeight() - 30);
-        if(bPauseMenu){
-            g.drawImage(renderer.Pause, screen.getWidth()/2 - 250, screen.getHeight()/2-250, 500, 500, null);
+        if (bPauseMenu) {
+            g.drawImage(renderer.Pause, screen.getWidth() / 2 - 250, screen.getHeight() / 2 - 250, 500, 500, null);
         }
-        
-        if(bControls){
-                g.drawImage(renderer.Controls, screen.getWidth()/2 - 250, screen.getHeight()/2-250, 500, 500, null);
-            }
-        
+
+        if (bControls) {
+            g.drawImage(renderer.Controls, screen.getWidth() / 2 - 250, screen.getHeight() / 2 - 250, 500, 500, null);
+        }
+
     }
 
     /**
@@ -278,7 +278,7 @@ public class GameManager extends GameCore {
                 && s1y < s2y + s2.getHeight()
                 && s2y < s1y + s1.getHeight());
     }
-    
+
     public boolean isCollisionTackle(Sprite s1, Sprite s2) {
         // if the Sprites are the same, return false
         if (s1 == s2) {
@@ -287,9 +287,11 @@ public class GameManager extends GameCore {
 
         // if one of the Sprites is a dead Creature, return false
         if (s1 instanceof Creature && !((Creature) s1).isAlive()) {
+
             return false;
         }
         if (s2 instanceof Creature && !((Creature) s2).isAlive()) {
+
             return false;
         }
 
@@ -300,10 +302,10 @@ public class GameManager extends GameCore {
         int s2y = Math.round(s2.getY());
 
         // check if the two sprites' boundaries intersect
-        return (s1x-200 < s2x + s2.getWidth()
-                && s2x < s1x + s1.getWidth()+100
-                && s1y-200 < s2y + s2.getHeight()
-                && s2y < s1y + s1.getHeight()+100);
+        return (s1x - 100 <= s2x + s2.getWidth()
+                && s2x < s1x + s1.getWidth() + 100
+                && s1y - 100 <= s2y + s2.getHeight()
+                && s2y < s1y + s1.getHeight() + 100);
     }
 
     /**
@@ -331,53 +333,52 @@ public class GameManager extends GameCore {
      * map.
      */
     public void update(long elapsedTime) {
-        if(bPause){
+        if (bPause) {
             //check keyboard/input
             checkInput(elapsedTime);
             //pause music
             midiPlayer.setPaused(true);
-            
-            if(controls.isPressed()){
-                if(!bControls){
+
+            if (controls.isPressed()) {
+                if (!bControls) {
                     bControls = true;
                     bPauseMenu = false;
-                }else{
+                } else {
                     bControls = false;
                     bPauseMenu = true;
                 }
             }
-            if(pause.isPressed()){
+            if (pause.isPressed()) {
                 bPause = false;
                 bPauseMenu = false;
             }
         }
-        if(!bPause){
-            
-            if(pause.isPressed()){
-            if(bPause){
-                bPause = false;
-                
-                // Make the cursor invisible
-                //inputManager.setCursor(InputManager.INVISIBLE_CURSOR);
-            }else{
-                bPauseMenu = true;
-                bPause = true;
-                //Make the cursor visible
-                //inputManager.setCursor(Cursor.getDefaultCursor());
+        if (!bPause) {
+
+            if (pause.isPressed()) {
+                if (bPause) {
+                    bPause = false;
+
+                    // Make the cursor invisible
+                    //inputManager.setCursor(InputManager.INVISIBLE_CURSOR);
+                } else {
+                    bPauseMenu = true;
+                    bPause = true;
+                    //Make the cursor visible
+                    //inputManager.setCursor(Cursor.getDefaultCursor());
+                }
+
             }
-            
-            
-        }
-        
-        if(controls.isPressed()){
-            if(!bControls){
-               bControls = true;
-               bPause = false;
-            }else{
-                bControls = false;
-                bPause = true;
+
+            if (controls.isPressed()) {
+                if (!bControls) {
+                    bControls = true;
+                    bPause = false;
+                } else {
+                    bControls = false;
+                    bPause = true;
+                }
             }
-        }
             //play music
             midiPlayer.setPaused(false);
             Creature player = (Creature) map.getPlayer();
@@ -389,7 +390,7 @@ public class GameManager extends GameCore {
                 score = 0;
                 return;
             }
-            
+
             // get keyboard/mouse input
             checkInput(elapsedTime);
 
@@ -413,7 +414,7 @@ public class GameManager extends GameCore {
                 sprite.update(elapsedTime);
             }
         }
-        
+
     }
 
     /**
@@ -429,28 +430,28 @@ public class GameManager extends GameCore {
         Point tile
                 = getTileCollision(creature, newX, creature.getY());
         if (tile == null) {
-            if(creature instanceof Virus){
-            Creature player = (Creature) map.getPlayer();
-               if(isCollisionTackle(creature,player)) {
-                   if(player.getX() < creature.getX() && controlTackleX){
-                   creature.setVelocityX(-.4f);    
-                   controlTackleX = false;
-                   }
-                   else if(controlTackleX){
-                     creature.setVelocityX(.4f);
-                     controlTackleX = false;
-                   }
-                   
-               }
-               else{
-                  controlTackleX = true;
-                  ((Virus) creature).setMaxSpeed(.2f);
-                  
+            if (creature instanceof Virus) {
+                Creature player = (Creature) map.getPlayer();
+                
+                if (isCollisionTackle(creature, player)) {
+
+                    if (player.getX() < creature.getX() && ((Virus) creature).isControlVelocityX()) {
+                        creature.setVelocityX(-.4f);
+                        ((Virus) creature).setControlVelocityX(false);
+                    } else if (player.getX() >= creature.getX() && ((Virus) creature).isControlVelocityX()) {
+                        creature.setVelocityX(.4f);
+                       ((Virus) creature).setControlVelocityX(false);
+                    }
+
+                } else {
+                    ((Virus) creature).setControlVelocityX(true);
+                    ((Virus) creature).setMaxSpeed(.2f);
+
                 }
-            
+
             }
-                creature.setX(newX);
-            
+            creature.setX(newX);
+
         } else {
             // line up with the tile boundary
             if (dx > 0) {
@@ -473,27 +474,24 @@ public class GameManager extends GameCore {
         float newY = oldY + dy * elapsedTime;
         tile = getTileCollision(creature, creature.getX(), newY);
         if (tile == null) {
-            if(creature instanceof Virus){
-            Creature player = (Creature) map.getPlayer();
-               if(isCollisionTackle(creature,player)) {
-                   if(player.getY() < creature.getY() && controlTackleY){
-                   creature.setVelocityY(-.4f);
-                   controlTackleY = false;
-                   }
-                   else if(controlTackleY){
-                     creature.setVelocityY(.4f);
-                     controlTackleY = false;
-                   }
-                   
-               }
-                else{
-                controlTackleY = true;
-                ((Virus) creature).setMaxSpeed(.2f);
-               }
+            if (creature instanceof Virus) {
+                Creature player = (Creature) map.getPlayer();
+                if (isCollisionTackle(creature, player)) {
+                    if (player.getY() < creature.getY() && ((Virus) creature).isControlVelocityY()) {
+                        creature.setVelocityY(-.4f);
+                        ((Virus) creature).setControlVelocityY(false);
+                    } else if (player.getY() >= creature.getY() && ((Virus) creature).isControlVelocityY()) {
+                        creature.setVelocityY(.4f);
+                        ((Virus) creature).setControlVelocityY(false);
+                    }
+
+                } else {
+                    ((Virus) creature).setControlVelocityY(true);
+                    ((Virus) creature).setMaxSpeed(.2f);
+                }
             }
-          creature.setY(newY);
-            
-            
+            creature.setY(newY);
+
         } else {
             // line up with the tile boundary
             if (dy > 0) {
@@ -509,8 +507,6 @@ public class GameManager extends GameCore {
         if (creature instanceof Player) {
             checkPlayerCollision((Player) creature, true);
         }
-        
-        
 
     }
 
@@ -528,33 +524,38 @@ public class GameManager extends GameCore {
         Sprite collisionSprite = getSpriteCollision(player);
         if (collisionSprite instanceof PowerUp) {
             acquirePowerUp((PowerUp) collisionSprite);
-        } 
-        else if (collisionSprite instanceof Virus){
+        } else if (collisionSprite instanceof Virus) {
             Creature badguy = (Creature) collisionSprite;
-            if(canKill){
+            if (canKill) {
                 //kill the badguy and make player bounce
                 //soundManager.play(boopSound);
                 badguy.setState(Creature.STATE_DYING);
                 vidas--;
             }
-        }
-        else if (collisionSprite instanceof Person) {
+        } else if (collisionSprite instanceof Person) {
             Creature badguy = (Creature) collisionSprite;
             if (canKill) {
                 // kill the badguy and make player bounce
-                
-                int rand = (int)(Math.random() * (4));
+
+                int rand = (int) (Math.random() * (4));
                 System.out.println(rand);
                 ouchSounds[rand].play();
                 badguy.setState(Creature.STATE_DYING);
                 score += 10;
-                //map = resourceManager.loadNextMap();
-                //renderer.setBackground(
-                //resourceManager.loadImage("map" + ++mapCounter +".jpg"));
-                //player.setY(badguy.getY() - player.getHeight());
-               // player.jump(true);
-            }
-            else if(vidas<=0) {
+                if (score > 100) {
+                    map = resourceManager.loadNextMap();
+                    renderer.setBackground(
+                            resourceManager.loadImage("map" + ++mapCounter + ".jpg"));
+                    score = 0;
+                    controlTrack++;
+                    midiPlayer.stop();
+                    Sequence sequence
+                        = midiPlayer.getSequence("src/sounds/song"+controlTrack+".mid");
+                    midiPlayer.play(sequence, true);
+                    //player.setY(badguy.getY() - player.getHeight());
+                    // player.jump(true);
+                }
+            } else if (vidas <= 0) {
                 // player.jump(true);
             } else {
                 // player dies!
@@ -582,7 +583,7 @@ public class GameManager extends GameCore {
             soundManager.play(personCaptured,
                     new EchoFilter(2000, .7f), false);
             map = resourceManager.loadNextMap();
-            
+
         }
     }
 
