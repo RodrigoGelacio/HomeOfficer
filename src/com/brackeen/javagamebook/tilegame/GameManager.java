@@ -35,6 +35,8 @@ public class GameManager extends GameCore {
     private Point pointCache = new Point();
     private TileMap map;
     private SoundClipped[] ouchSounds;
+    private SoundClipped GameOverSound;
+    private SoundClipped HPLostSound;
     private MidiPlayer midiPlayer;
     private SoundManager soundManager;
     private ResourceManager resourceManager;
@@ -93,6 +95,11 @@ public class GameManager extends GameCore {
             String number = new String(Integer.toString(i+1));
             ouchSounds[i] = new SoundClipped("/sounds/ouch" + number + ".wav");
         }
+        
+        GameOverSound = new SoundClipped("/sounds/GameOver3.wav");
+        HPLostSound = new SoundClipped("/sounds/LostHP.wav");
+        
+        
         // soundManager = new SoundManager(PLAYBACK_FORMAT);
         // personCaptured = soundManager.getSound("src/sounds/ouch.wav");
         //boopSound = soundManager.getSound("src/sounds/boop2.wav");
@@ -353,6 +360,7 @@ public class GameManager extends GameCore {
 
             // player is dead! start map over
             if (vidas <= 0) {
+                GameOverSound.play();
                 map = resourceManager.reloadMap();
                 vidas = 3;
                 score = 0;
@@ -466,6 +474,7 @@ public class GameManager extends GameCore {
                 //kill the badguy and make player bounce
                 //soundManager.play(boopSound);
                 badguy.setState(Creature.STATE_DYING);
+                HPLostSound.play();
                 vidas--;
             }
         }
