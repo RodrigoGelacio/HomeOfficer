@@ -9,7 +9,7 @@ public class Player extends Creature {
 
     private static final float JUMP_SPEED = -.95f;
     
-    public static final float SPEED = 0.5f;
+    private float SPEED = 0.5f;
 
     private boolean onGround;
 
@@ -46,10 +46,13 @@ public class Player extends Creature {
     */
     public void jump(boolean forceJump) {
     }
-
+    
+    public void setMaxSpeed(float f){
+        SPEED = f;
+    }
 
     public float getMaxSpeed() {
-        return 0.5f;
+        return SPEED;
     }
 
 }
