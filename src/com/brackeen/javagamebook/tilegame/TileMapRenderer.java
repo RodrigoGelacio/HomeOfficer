@@ -30,6 +30,7 @@ public class TileMapRenderer {
     private Image background;
     public Image Pause;
     public Image Controls;
+    public Image Serendipity;
 
     /**
         Converts a pixel position to a tile position.
@@ -79,6 +80,10 @@ public class TileMapRenderer {
 
     public void setControls(Image Controls) {
         this.Controls = Controls;
+    }
+    
+    public void setSerendipity(Image Serendipity){
+        this.Serendipity = Serendipity;
     }
     /**
         Draws the specified TileMap.
