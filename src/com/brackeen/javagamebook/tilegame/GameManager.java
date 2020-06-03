@@ -703,6 +703,7 @@ public class GameManager extends GameCore {
                         } else {
                             //over = true;
                             //overScreen = true;
+                            bPassed = false;
                             midiPlayer.stop();
                             finalScreen = true;
                         }
