@@ -32,6 +32,7 @@ public class TileMapRenderer {
     public Image Controls; //control image
     public Image Serendipity; //initial screen image
     public Image gameOver; //gameOver screen image
+    public Image overFinal;
 
     /**
         Converts a pixel position to a tile position.
@@ -97,6 +98,10 @@ public class TileMapRenderer {
      */
     public void setSerendipity(Image Serendipity){
         this.Serendipity = Serendipity;
+    }
+    
+    public void setOverFinal(Image i){
+        this.overFinal = i;
     }
     
     /**

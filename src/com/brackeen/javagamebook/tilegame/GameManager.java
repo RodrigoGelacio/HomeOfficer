@@ -65,6 +65,7 @@ public class GameManager extends GameCore {
     private boolean serenScreen = true;
     private boolean over = false;
     private boolean overScreen = false;
+    private boolean finalScreen = false;
 
     private int vidas;
     private int score;
@@ -125,6 +126,13 @@ public class GameManager extends GameCore {
         } catch (IOException ex) {
             Logger.getLogger(GameManager.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        try {
+            renderer.setOverFinal(
+                    resourceManager.loadImage("gameOverFinal.png"));
+        } catch (IOException ex) {
+            Logger.getLogger(GameManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         // load first map
         map = resourceManager.loadNextMap();
@@ -166,8 +174,7 @@ public class GameManager extends GameCore {
         moveRight = new GameAction("moveRight");
         moveUp = new GameAction("moveUp");
         moveDown = new GameAction("moveDown");
-        exit = new GameAction("exit",
-                GameAction.DETECT_INITAL_PRESS_ONLY);
+        exit = new GameAction("exit");
 
         pause = new GameAction("pause",
                 GameAction.DETECT_INITAL_PRESS_ONLY);
@@ -196,6 +203,12 @@ public class GameManager extends GameCore {
     }
 
     private void checkInput(long elapsedTime) {
+        if(exit.isPressed()){
+            bExit = true;
+                if (bExit) {
+                    stop();
+                }
+        }
         if (bPause) {
             if (exit.isPressed()) {
                 bExit = true;
@@ -249,6 +262,10 @@ public class GameManager extends GameCore {
         g.setColor(Color.BLUE);
         g.drawString("Vidas: " + vidas, 10, screen.getHeight() - 10);
         g.drawString("Score: " + score, 10, screen.getHeight() - 30);
+        if(finalScreen){
+            g.drawImage(renderer.overFinal, 0,0,screen.getWidth(),screen.getHeight(),null);
+
+        }
         if (serenScreen){
             g.drawImage(renderer.Serendipity, 0,0,screen.getWidth(),screen.getHeight(),null);
         }
@@ -638,7 +655,7 @@ public class GameManager extends GameCore {
                 //soundManager.play(boopSound);
                 badguy.setState(Creature.STATE_DYING);
                 HPLostSound.play();
-                vidas--;
+                //vidas--;
             }
         } else if (collisionSprite instanceof Person) {
             Creature badguy = (Creature) collisionSprite;
@@ -651,6 +668,7 @@ public class GameManager extends GameCore {
                 badguy.setState(Creature.STATE_DYING);
                 score += 10;
                 if (score > 100) {
+                    if(mapCounter + 1 != 4){
                     map = resourceManager.loadNextMap();
                     renderer.setBackground(
                             resourceManager.loadImage("map" + ++mapCounter + ".jpg"));
@@ -663,6 +681,15 @@ public class GameManager extends GameCore {
                     midiPlayer.play(sequence, true);
                     //player.setY(badguy.getY() - player.getHeight());
                     // player.jump(true);
+                    }
+                    else{
+                        //over = true;
+                        //overScreen = true;
+                        midiPlayer.stop();
+                        finalScreen = true;
+                        
+                        
+                    }
                 }
             } else if (vidas <= 0) {
                 // player.jump(true);
