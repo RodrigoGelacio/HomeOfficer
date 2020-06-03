@@ -14,9 +14,9 @@ import com.brackeen.javagamebook.graphics.Sprite;
 */
 public class TileMap {
 
-    private Image[][] tiles;
-    private LinkedList sprites;
-    private Sprite player;
+    private Image[][] tiles; //array to storage the tile images
+    private LinkedList sprites; //list of all creature sprites
+    private Sprite player; //sprite of player
 
     /**
         Creates a new TileMap with the specified width and

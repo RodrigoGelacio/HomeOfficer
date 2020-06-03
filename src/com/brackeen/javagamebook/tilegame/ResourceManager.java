@@ -33,8 +33,6 @@ public class ResourceManager {
     private Sprite musicSprite;
     private Sprite coinSprite;
     private Sprite goalSprite;
-    private Sprite grubSprite;
-    private Sprite flySprite;
 
     /**
         Creates a new ResourceManager with the specified
@@ -44,7 +42,6 @@ public class ResourceManager {
         this.gc = gc;
         loadTileImages();
         loadCreatureSprites();
-        loadPowerUpSprites();
     }
 
 
@@ -56,17 +53,31 @@ public class ResourceManager {
         return new ImageIcon(filename).getImage();
     }
 
-
+    /**
+     * 
+     * @param image
+     * @return mirrored image
+     */
     public Image getMirrorImage(Image image) {    
         return getScaledImage(image, -1, 1);
     }
 
-
+    /**
+     * 
+     * @param image
+     * @return flips the image
+     */
     public Image getFlippedImage(Image image) {
         return getScaledImage(image, 1, -1);
     }
 
-
+    /**
+     * 
+     * @param image
+     * @param x
+     * @param y
+     * @return image scaled 
+     */
     private Image getScaledImage(Image image, float x, float y) {
         // set up the transform
         AffineTransform transform = new AffineTransform();
@@ -89,7 +100,10 @@ public class ResourceManager {
         return newImage;
     }
 
-
+    /**
+     * Loads the next map.
+     * @return tilemap object
+     */
     public TileMap loadNextMap() {
         TileMap map = null;
         while (map == null) {
@@ -111,7 +125,10 @@ public class ResourceManager {
         return map;
     }
 
-
+    /**
+     * Reloads the tilemap
+     * @return tilemap object
+     */
     public TileMap reloadMap() {
         try {
             return loadMap(
@@ -123,7 +140,12 @@ public class ResourceManager {
         }
     }
 
-
+    /**
+     * It converts the string input into an actual tilemap.
+     * @param filename
+     * @return tilemap object
+     * @throws IOException 
+     */
     private TileMap loadMap(String filename)
         throws IOException
     {
@@ -207,7 +229,13 @@ public class ResourceManager {
         return newMap;
     }
 
-
+    /**
+     * Adds a character to the tilemap.
+     * @param map
+     * @param hostSprite
+     * @param tileX
+     * @param tileY 
+     */
     private void addSprite(TileMap map,
         Sprite hostSprite, int tileX, int tileY)
     {
@@ -254,7 +282,9 @@ public class ResourceManager {
         
     }
 
-
+    /**
+     * Loads all creature assets.
+     */
     public void loadCreatureSprites() {
 
         Image[][] imagesHorizontal = new Image[4][];
@@ -289,7 +319,7 @@ public class ResourceManager {
             
         };
         
-        //load vertical images
+        //load up images
         imagesUp[0] = new Image[]{
             loadImage("playerUp1.png"),
             loadImage("playerUp2.png"),
@@ -317,6 +347,7 @@ public class ResourceManager {
             loadImage("virus3.png"),
         };
         
+        //load down images
         imagesDown[0] = new Image[]{
             loadImage("playerDown1.png"),
             loadImage("playerDown2.png"),
@@ -343,7 +374,8 @@ public class ResourceManager {
             loadImage("virus2.png"),
             loadImage("virus3.png"),
         };
-
+        
+        //Prepares the next array to save the next characters animation
         imagesHorizontal[1] = new Image[imagesHorizontal[0].length];
         imagesHorizontal[2] = new Image[imagesHorizontal[0].length];
         imagesHorizontal[3] = new Image[imagesHorizontal[0].length];
@@ -365,10 +397,11 @@ public class ResourceManager {
         Animation[] person5Anim = new Animation[6];
         Animation[] person6Anim = new Animation[6];
         Animation[] virusAnim = new Animation[6];
+        
+        //loads all horizontal images for the persons in the game
         for (int i=0; i<4; i++) {
             playerAnim[i] = createPlayerAnim(
                 imagesHorizontal[i][0], imagesHorizontal[i][1], imagesHorizontal[i][2]);
-            
             person1Anim[i] = createPersonAnim(
                 imagesHorizontal[i][3], imagesHorizontal[i][4], imagesHorizontal[i][5]);
             person2Anim[i] = createPersonAnim(
@@ -385,6 +418,7 @@ public class ResourceManager {
                 imagesHorizontal[i][21], imagesHorizontal[i][22], imagesHorizontal[i][23]);
         }
         
+        //Loads all up and down animations of the persons in the game.
         playerAnim[4] = createPlayerAnim(imagesUp[0][0], imagesUp[0][1],imagesUp[0][2]);
         playerAnim[5] = createPlayerAnim(imagesDown[0][0], imagesDown[0][1],imagesDown[0][2]);
         person1Anim[4] = createPersonAnim(imagesUp[0][3], imagesUp[0][4], imagesUp[0][5]);
@@ -421,7 +455,13 @@ public class ResourceManager {
                 virusAnim[2], virusAnim[3]);
     }
 
-
+    /**
+     * Stores the images in an animation List, and also the time in milliseconds to show the image.
+     * @param player1
+     * @param player2
+     * @param player3
+     * @return animation Object
+     */
     private Animation createPlayerAnim(Image player1,
         Image player2, Image player3)
     {
@@ -431,7 +471,14 @@ public class ResourceManager {
         anim.addFrame(player3, 150);
         return anim;
     }
-
+    
+    /**
+     * 
+     * @param person1
+     * @param person2
+     * @param person3
+     * @return 
+     */
     private Animation createPersonAnim(Image person1,
             Image person2, Image person3){
         Animation anim = new Animation();
@@ -439,52 +486,6 @@ public class ResourceManager {
         anim.addFrame(person2, 150);
         anim.addFrame(person3, 150);
         return anim;
-    }
-    
-    private Animation createFlyAnim(Image img1, Image img2,
-        Image img3)
-    {
-        Animation anim = new Animation();
-        anim.addFrame(img1, 50);
-        anim.addFrame(img2, 50);
-        anim.addFrame(img3, 50);
-        anim.addFrame(img2, 50);
-        return anim;
-    }
-
-
-    private Animation createGrubAnim(Image img1, Image img2) {
-        Animation anim = new Animation();
-        anim.addFrame(img1, 250);
-        anim.addFrame(img2, 250);
-        return anim;
-    }
-
-
-    private void loadPowerUpSprites() {
-        // create "goal" sprite
-        Animation anim = new Animation();
-        anim.addFrame(loadImage("heart1.png"), 150);
-        anim.addFrame(loadImage("heart2.png"), 150);
-        anim.addFrame(loadImage("heart3.png"), 150);
-        anim.addFrame(loadImage("heart2.png"), 150);
-        goalSprite = new PowerUp.Goal(anim);
-
-        // create "star" sprite
-        anim = new Animation();
-        anim.addFrame(loadImage("star1.png"), 100);
-        anim.addFrame(loadImage("star2.png"), 100);
-        anim.addFrame(loadImage("star3.png"), 100);
-        anim.addFrame(loadImage("star4.png"), 100);
-        coinSprite = new PowerUp.Star(anim);
-
-        // create "music" sprite
-        anim = new Animation();
-        anim.addFrame(loadImage("music1.png"), 150);
-        anim.addFrame(loadImage("music2.png"), 150);
-        anim.addFrame(loadImage("music3.png"), 150);
-        anim.addFrame(loadImage("music2.png"), 150);
-        musicSprite = new PowerUp.Music(anim);
     }
 
 }

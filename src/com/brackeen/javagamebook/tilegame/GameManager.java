@@ -40,8 +40,6 @@ public class GameManager extends GameCore {
     private MidiPlayer midiPlayer;
     private SoundManager soundManager;
     private ResourceManager resourceManager;
-    private Sound personCaptured;
-    private Sound boopSound;
     private InputManager inputManager;
     private TileMapRenderer renderer;
 
@@ -49,10 +47,8 @@ public class GameManager extends GameCore {
     private GameAction moveRight;
     private GameAction moveUp;
     private GameAction moveDown;
-    private GameAction jump;
     private GameAction exit;
     private GameAction pause;
-    private GameAction Pause;
     private GameAction controls;
     private GameAction serendipity;
     private GameAction gameover;
@@ -143,8 +139,6 @@ public class GameManager extends GameCore {
         moveRight = new GameAction("moveRight");
         moveUp = new GameAction("moveUp");
         moveDown = new GameAction("moveDown");
-        jump = new GameAction("jump",
-                GameAction.DETECT_INITAL_PRESS_ONLY);
         exit = new GameAction("exit",
                 GameAction.DETECT_INITAL_PRESS_ONLY);
 
@@ -602,9 +596,7 @@ public class GameManager extends GameCore {
 
         // check for player collision with other sprites
         Sprite collisionSprite = getSpriteCollision(player);
-        if (collisionSprite instanceof PowerUp) {
-            acquirePowerUp((PowerUp) collisionSprite);
-        } else if (collisionSprite instanceof Virus) {
+        if (collisionSprite instanceof Virus) {
             Creature badguy = (Creature) collisionSprite;
             if (canKill) {
                 //kill the badguy and make player bounce
@@ -643,29 +635,6 @@ public class GameManager extends GameCore {
                 // player dies!
                 player.setState(Creature.STATE_DYING);
             }
-        }
-    }
-
-    /**
-     * Gives the player the speicifed power up and removes it from the map.
-     */
-    public void acquirePowerUp(PowerUp powerUp) {
-        // remove it from the map
-        map.removeSprite(powerUp);
-
-        if (powerUp instanceof PowerUp.Star) {
-            // do something here, like give the player points
-            soundManager.play(personCaptured);
-        } else if (powerUp instanceof PowerUp.Music) {
-            // change the music
-            soundManager.play(personCaptured);
-            toggleDrumPlayback();
-        } else if (powerUp instanceof PowerUp.Goal) {
-            // advance to next map
-            soundManager.play(personCaptured,
-                    new EchoFilter(2000, .7f), false);
-            map = resourceManager.loadNextMap();
-
         }
     }
 

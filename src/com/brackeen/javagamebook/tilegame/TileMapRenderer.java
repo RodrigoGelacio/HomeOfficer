@@ -31,7 +31,7 @@ public class TileMapRenderer {
     public Image Pause; //pause image
     public Image Controls; //control image
     public Image Serendipity; //initial screen image
-    public Image gameOver;
+    public Image gameOver; //gameOver screen image
 
     /**
         Converts a pixel position to a tile position.
@@ -75,18 +75,34 @@ public class TileMapRenderer {
         this.background = background;
     }
 
+    /**
+     * setMethod of pause
+     * @param Pause 
+     */
     public void setPause(Image Pause) {
         this.Pause = Pause;
     }
-
+    
+    /**
+     * setMethod for controls
+     * @param Controls 
+     */
     public void setControls(Image Controls) {
         this.Controls = Controls;
     }
     
+    /**
+     * setMethod for initial screen
+     * @param Serendipity 
+     */
     public void setSerendipity(Image Serendipity){
         this.Serendipity = Serendipity;
     }
     
+    /**
+     * setMethod for gameOver screen
+     * @param gameOver 
+     */
     public void setOver(Image gameOver){
         this.gameOver = gameOver;
     }
