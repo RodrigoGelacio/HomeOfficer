@@ -27,10 +27,10 @@ public class TileMapRenderer {
     // Math.pow(2, TILE_SIZE_BITS) == TILE_SIZE
     private static final int TILE_SIZE_BITS = 6;
 
-    private Image background;
-    public Image Pause;
-    public Image Controls;
-    public Image Serendipity;
+    private Image background; //image for the backgrounf
+    public Image Pause; //pause image
+    public Image Controls; //control image
+    public Image Serendipity; //initial screen image
     public Image gameOver;
 
     /**
