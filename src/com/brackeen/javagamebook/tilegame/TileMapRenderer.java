@@ -33,6 +33,9 @@ public class TileMapRenderer {
     public Image Serendipity; //initial screen image
     public Image gameOver; //gameOver screen image
     public Image overFinal;
+    public Image Menu;
+    public Image maps;
+    public Image passed;
 
     /**
         Converts a pixel position to a tile position.
@@ -77,6 +80,23 @@ public class TileMapRenderer {
     }
 
     /**
+     * Sets the Menu to draw
+     * @param Menu 
+     */
+     public void setMenu(Image Menu) {
+        this.Menu = Menu;
+    }
+     
+      /**
+      * setMethod of level passed screen
+      * @param passed 
+      */
+    
+     public void setPassed(Image passed) {
+        this.passed = passed;
+    }
+     
+    /**
      * setMethod of pause
      * @param Pause 
      */
@@ -111,6 +131,15 @@ public class TileMapRenderer {
     public void setOver(Image gameOver){
         this.gameOver = gameOver;
     }
+    
+    /**
+     * setMethod for maps screen
+     * @param maps 
+     */
+    public void setMaps(Image maps){
+        this.maps = maps;
+    }
+    
     /**
         Draws the specified TileMap.
     */
