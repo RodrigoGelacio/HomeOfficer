@@ -582,7 +582,7 @@ public class GameManager extends GameCore {
      * map.
      */
     public void update(long elapsedTime) {
-        if(seren||bMenu){
+        if(seren||bMenu ){
             //check keyboard/input
             checkInput (elapsedTime);
             //pause music
