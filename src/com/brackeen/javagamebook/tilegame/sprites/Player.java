@@ -7,12 +7,12 @@ import com.brackeen.javagamebook.graphics.Animation;
 */
 public class Player extends Creature {
 
-    private static final float JUMP_SPEED = -.95f;
     
+    
+    //Speed of the player
     private float SPEED = 0.5f;
 
-    private boolean onGround;
-
+    //Player Animations
     public Player(Animation left, Animation right,Animation up, Animation down,
         Animation deadLeft, Animation deadRight)
     {
@@ -20,16 +20,17 @@ public class Player extends Creature {
     }
 
 
+    //Called if the player collided with a tile horizontally
     public void collideHorizontal() {
         setVelocityX(0);
     }
 
-
+    //Called if the player collided with a tile vertically
     public void collideVertical() {
         setVelocityY(0);
     }
-
-
+    
+    //keep track of the player in y
     public void setY(float y) {
         super.setY(y);
     }
@@ -39,18 +40,12 @@ public class Player extends Creature {
         // do nothing
     }
 
-
-    /**
-        Makes the player jump if the player is on the ground or
-        if forceJump is true.
-    */
-    public void jump(boolean forceJump) {
-    }
-    
+    //Set Max Speed of the player
     public void setMaxSpeed(float f){
         SPEED = f;
     }
 
+    //Get Max Speed of the player
     public float getMaxSpeed() {
         return SPEED;
     }
