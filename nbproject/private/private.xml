@@ -3,6 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/JuegoBrackeen/src/com/brackeen/javagamebook/tilegame/ResourceManager.java</file>
             <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/JuegoBrackeen/src/images/person2Left2.png</file>
             <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/JuegoBrackeen/src/com/brackeen/javagamebook/tilegame/TileMap.java</file>
@@ -107,6 +108,11 @@
             <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/JuegoBrackeen/src/images/playerUp2.png</file>
             <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/JuegoBrackeen/src/images/person3Up3.png</file>
             <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/JuegoBrackeen/src/com/brackeen/javagamebook/tilegame/sprites/Fly.java</file>
+=======
+            <file>file:/C:/Users/carol/Documents/Proyecto3/HomeOfficer/src/com/brackeen/javagamebook/tilegame/TileMapRenderer.java</file>
+            <file>file:/C:/Users/carol/Documents/Proyecto3/HomeOfficer/src/com/brackeen/javagamebook/graphics/ScreenManager.java</file>
+            <file>file:/C:/Users/carol/Documents/Proyecto3/HomeOfficer/src/com/brackeen/javagamebook/tilegame/GameManager.java</file>
+>>>>>>> a5f566b599cb6f2cc667288fd291ea3ebe854d32
         </group>
     </open-files>
 </project-private>

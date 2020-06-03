@@ -54,11 +54,18 @@ public class GameManager extends GameCore {
     private GameAction pause;
     private GameAction Pause;
     private GameAction controls;
+    private GameAction serendipity;
+    private GameAction gameover;
     private boolean bPause = false;
     private boolean bPauseMenu = false;
     private boolean bControls = false;
     private boolean bExit = false;
     private int controlTrack;
+    
+    private boolean seren = true;
+    private boolean serenScreen = true;
+    private boolean over = false;
+    private boolean overScreen = false;
 
     private int vidas;
     private int score;
@@ -83,7 +90,13 @@ public class GameManager extends GameCore {
         renderer = new TileMapRenderer();
         renderer.setBackground(
                 resourceManager.loadImage("map1.jpg"));
-
+        
+        renderer.setSerendipity(
+                resourceManager.loadImage("serendipity.png"));
+        
+        renderer.setOver(
+                resourceManager.loadImage("gameOver.png"));  
+        
         renderer.setPause(
                 resourceManager.loadImage("PauseMenu.png"));
 
@@ -139,7 +152,13 @@ public class GameManager extends GameCore {
                 GameAction.DETECT_INITAL_PRESS_ONLY);
         controls = new GameAction("controls",
                 GameAction.DETECT_INITAL_PRESS_ONLY);
-
+        
+        serendipity = new GameAction("serendipity",
+                   GameAction.DETECT_INITAL_PRESS_ONLY);
+        
+        gameover = new GameAction("gameover",
+                    GameAction.DETECT_INITAL_PRESS_ONLY);
+        
         inputManager = new InputManager(
                 screen.getFullScreenWindow());
         inputManager.setCursor(InputManager.INVISIBLE_CURSOR);
@@ -151,6 +170,8 @@ public class GameManager extends GameCore {
         inputManager.mapToKey(exit, KeyEvent.VK_ESCAPE);
         inputManager.mapToKey(pause, KeyEvent.VK_P);
         inputManager.mapToKey(controls, KeyEvent.VK_H);
+        inputManager.mapToKey(serendipity, KeyEvent.VK_SPACE);
+        inputManager.mapToKey(gameover, KeyEvent.VK_ENTER);
     }
 
     private void checkInput(long elapsedTime) {
@@ -158,6 +179,22 @@ public class GameManager extends GameCore {
             if (exit.isPressed()) {
                 bExit = true;
                 if (bExit) {
+                    stop();
+                }
+            }
+        }
+        if (seren){
+            if(exit.isPressed()){
+                bExit = true;
+                if(bExit){
+                    stop();
+                }
+            }
+        }
+        if (over){
+            if(exit.isPressed()){
+                bExit = true;
+                if(bExit){
                     stop();
                 }
             }
@@ -191,6 +228,14 @@ public class GameManager extends GameCore {
         g.setColor(Color.BLUE);
         g.drawString("Vidas: " + vidas, 10, screen.getHeight() - 10);
         g.drawString("Score: " + score, 10, screen.getHeight() - 30);
+        if (serenScreen){
+            g.drawImage(renderer.Serendipity, 0,0,screen.getWidth(),screen.getHeight(),null);
+        }
+        
+        if (overScreen){
+            g.drawImage(renderer.gameOver, 0, 0, screen.getWidth(), screen.getHeight(), null);
+        }
+        
         if (bPauseMenu) {
             g.drawImage(renderer.Pause, screen.getWidth() / 2 - 250, screen.getHeight() / 2 - 250, 500, 500, null);
         }
@@ -340,6 +385,17 @@ public class GameManager extends GameCore {
      * map.
      */
     public void update(long elapsedTime) {
+        if(seren){
+            //check keyboard/input
+            checkInput (elapsedTime);
+            //pause music
+            midiPlayer.setPaused(true);
+            
+            if (serendipity.isPressed()){
+                seren = false;
+                serenScreen = false;
+            }
+        }
         if (bPause) {
             //check keyboard/input
             checkInput(elapsedTime);
@@ -360,7 +416,7 @@ public class GameManager extends GameCore {
                 bPauseMenu = false;
             }
         }
-        if (!bPause) {
+        if (!bPause && !seren) {
 
             if (pause.isPressed()) {
                 if (bPause) {
@@ -386,43 +442,59 @@ public class GameManager extends GameCore {
                     bPause = true;
                 }
             }
-            //play music
-            midiPlayer.setPaused(false);
-            Creature player = (Creature) map.getPlayer();
 
             // player is dead! start map over
             if (vidas <= 0) {
-                GameOverSound.play();
-                map = resourceManager.reloadMap();
-                vidas = 3;
-                score = 0;
-                return;
+                if(vidas == 0){
+                    GameOverSound.play();
+                }
+                over = true;
+                overScreen = true;
+                if(over){
+                    vidas = -1;
+                   //check keyboard/input
+                   checkInput(elapsedTime);
+                   //pause music
+                   midiPlayer.setPaused(true);
+                    if(gameover.isPressed()){
+                        over = false;
+                        overScreen = false;
+                        map = resourceManager.reloadMap();
+                        vidas = 3;
+                        score = 0;
+                        return;
+                    }
+                }
             }
 
             // get keyboard/mouse input
             checkInput(elapsedTime);
+            if (!over){
+                //play music
+                midiPlayer.setPaused(false);
+                Creature player = (Creature) map.getPlayer();
+                // update player
+                updateCreature(player, elapsedTime);
+                player.update(elapsedTime);
 
-            // update player
-            updateCreature(player, elapsedTime);
-            player.update(elapsedTime);
-
-            // update other sprites
-            Iterator i = map.getSprites();
-            while (i.hasNext()) {
-                Sprite sprite = (Sprite) i.next();
-                if (sprite instanceof Creature) {
-                    Creature creature = (Creature) sprite;
-                    if (creature.getState() == Creature.STATE_DEAD) {
-                        i.remove();
-                    } else {
-                        updateCreature(creature, elapsedTime);
+                // update other sprites
+                Iterator i = map.getSprites();
+                while (i.hasNext()) {
+                    Sprite sprite = (Sprite) i.next();
+                    if (sprite instanceof Creature) {
+                        Creature creature = (Creature) sprite;
+                        if (creature.getState() == Creature.STATE_DEAD) {
+                            i.remove();
+                        } else {
+                            updateCreature(creature, elapsedTime);
+                        }
                     }
+                    // normal update
+                    sprite.update(elapsedTime);
                 }
-                // normal update
-                sprite.update(elapsedTime);
             }
-        }
 
+        }
     }
 
     /**
