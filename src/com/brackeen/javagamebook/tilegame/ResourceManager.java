@@ -9,7 +9,10 @@ import javax.swing.ImageIcon;
 import com.brackeen.javagamebook.graphics.*;
 import com.brackeen.javagamebook.tilegame.sprites.*;
 import java.awt.image.BufferedImage;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import javax.imageio.ImageIO;
+import jdk.internal.module.Resources;
 
 
 /**
@@ -19,7 +22,7 @@ import javax.imageio.ImageIO;
 */
 public class ResourceManager {
 
-    private ArrayList tiles;
+    private ArrayList<BufferedImage> tiles;
     private int currentMap;
     private GraphicsConfiguration gc;
 
@@ -40,7 +43,7 @@ public class ResourceManager {
         Creates a new ResourceManager with the specified
         GraphicsConfiguration.
     */
-    public ResourceManager(GraphicsConfiguration gc) throws IOException {
+    public ResourceManager(GraphicsConfiguration gc) throws IOException, ClassNotFoundException {
         this.gc = gc;
         loadTileImages();
         loadCreatureSprites();
@@ -49,12 +52,26 @@ public class ResourceManager {
 
     /**
         Gets an image from the images/ directory.
+     * @param name
+     * @return 
+     * @throws java.io.IOException
     */
-    public Image loadImage(String name) throws IOException {
-        String filename = "src/images/" + name;
-        return ImageIO.read(new File(filename));
+    public BufferedImage loadImage(String name) throws IOException{
+        //Class cls = Class.forName("ClassLoaderDemo");
+
+         // returns the ClassLoader object associated with this Class
+         //ClassLoader cLoader = cls.getClassLoader();
+         String filename = "src/images"+ File.separator + name;
+         // input stream
+         //InputStream i = cLoader.getResourceAsStream(filename);
+         //BufferedReader r = new BufferedReader(new InputStreamReader(i));
+        
+        BufferedImage i = ImageIO.read(new File(filename));
+        return i;
         //ImageIcon(filename).getImage();
         //read(new File(filename))
+        //UtilityClass.class.getResource(path).toString();
+        //ImageIO.read(Main.class.getResource("S.jpg"));
     }
 
     /**
@@ -62,7 +79,7 @@ public class ResourceManager {
      * @param image
      * @return mirrored image
      */
-    public Image getMirrorImage(Image image) {    
+    public BufferedImage getMirrorImage(BufferedImage image) {    
         return getScaledImage(image, -1, 1);
     }
 
@@ -71,7 +88,7 @@ public class ResourceManager {
      * @param image
      * @return flips the image
      */
-    public Image getFlippedImage(Image image) {
+    public BufferedImage getFlippedImage(BufferedImage image) {
         return getScaledImage(image, 1, -1);
     }
 
@@ -82,7 +99,7 @@ public class ResourceManager {
      * @param y
      * @return image scaled 
      */
-    private Image getScaledImage(Image image, float x, float y) {
+    private BufferedImage getScaledImage(BufferedImage image, float x, float y) {
         // set up the transform
         AffineTransform transform = new AffineTransform();
         transform.scale(x, y);
@@ -91,7 +108,7 @@ public class ResourceManager {
             (y-1) * image.getHeight(null) / 2);
 
         // create a transparent (not translucent) image
-        Image newImage = gc.createCompatibleImage(
+        BufferedImage newImage = gc.createCompatibleImage(
             image.getWidth(null),
             image.getHeight(null),
             Transparency.BITMASK);
@@ -153,7 +170,7 @@ public class ResourceManager {
     private TileMap loadMap(String filename)
         throws IOException
     {
-        ArrayList lines = new ArrayList();
+        ArrayList lines = new ArrayList<BufferedImage>();
         int width = 0;
         int height = 0;
 
@@ -186,7 +203,7 @@ public class ResourceManager {
                 // check if the char represents tile A, B, C etc.
                 int tile = ch - 'A';
                 if (tile >= 0 && tile < tiles.size()) {
-                    newMap.setTile(x, y, (BufferedImage)tiles.get(tile));
+                    newMap.setTile(x, y, (BufferedImage) tiles.get(tile));
                 }
 
                 // check if the char represents a sprite
@@ -269,14 +286,14 @@ public class ResourceManager {
     // -----------------------------------------------------------
 
 
-    public void loadTileImages() throws IOException {
+    public void loadTileImages() throws IOException{
         // keep looking for tile A,B,C, etc. this makes it
         // easy to drop new tiles in the images/ directory
-        tiles = new ArrayList();
+        tiles = new ArrayList<BufferedImage>();
         char ch = 'A';
         while (true) {
             String name = "tile_" + ch + ".png";
-            File file = new File("src/images/" + name);
+            File file = new File("/src/images/" + name);
             if (!file.exists()) {
                 break;
             }
@@ -289,13 +306,13 @@ public class ResourceManager {
     /**
      * Loads all creature assets.
      */
-    public void loadCreatureSprites() throws IOException {
+    public void loadCreatureSprites() throws IOException{
 
-        Image[][] imagesHorizontal = new Image[4][];
-        Image[][] imagesUp = new Image[1][];
-        Image[][] imagesDown = new Image[1][];
+        BufferedImage[][] imagesHorizontal = new BufferedImage[4][];
+        BufferedImage[][] imagesUp = new BufferedImage[1][];
+        BufferedImage[][] imagesDown = new BufferedImage[1][];
         // load left-facing images
-        imagesHorizontal[0] = new Image[] {
+        imagesHorizontal[0] = new BufferedImage[] {
             loadImage("playerLeft1.png"),
             loadImage("playerLeft2.png"),
             loadImage("playerLeft3.png"),
@@ -324,7 +341,7 @@ public class ResourceManager {
         };
         
         //load up images
-        imagesUp[0] = new Image[]{
+        imagesUp[0] = new BufferedImage[]{
             loadImage("playerUp1.png"),
             loadImage("playerUp2.png"),
             loadImage("playerUp3.png"),
@@ -352,7 +369,7 @@ public class ResourceManager {
         };
         
         //load down images
-        imagesDown[0] = new Image[]{
+        imagesDown[0] = new BufferedImage[]{
             loadImage("playerDown1.png"),
             loadImage("playerDown2.png"),
             loadImage("playerDown3.png"),
@@ -380,12 +397,12 @@ public class ResourceManager {
         };
         
         //Prepares the next array to save the next characters animation
-        imagesHorizontal[1] = new Image[imagesHorizontal[0].length];
-        imagesHorizontal[2] = new Image[imagesHorizontal[0].length];
-        imagesHorizontal[3] = new Image[imagesHorizontal[0].length];
+        imagesHorizontal[1] = new BufferedImage[imagesHorizontal[0].length];
+        imagesHorizontal[2] = new BufferedImage[imagesHorizontal[0].length];
+        imagesHorizontal[3] = new BufferedImage[imagesHorizontal[0].length];
         for (int i=0; i<imagesHorizontal[0].length; i++) {
             // right-facing images
-            imagesHorizontal[1][i] = getMirrorImage(imagesHorizontal[0][i]);
+            imagesHorizontal[1][i] = (BufferedImage) getMirrorImage(imagesHorizontal[0][i]);
             // left-facing "dead" images
             imagesHorizontal[2][i] = getFlippedImage(imagesHorizontal[0][i]);
             // right-facing "dead" images
@@ -466,8 +483,8 @@ public class ResourceManager {
      * @param player3
      * @return animation Object
      */
-    private Animation createPlayerAnim(Image player1,
-        Image player2, Image player3)
+    private Animation createPlayerAnim(BufferedImage player1,
+        BufferedImage player2, BufferedImage player3)
     {
         Animation anim = new Animation();
         anim.addFrame(player1, 150);
@@ -483,8 +500,8 @@ public class ResourceManager {
      * @param person3
      * @return 
      */
-    private Animation createPersonAnim(Image person1,
-            Image person2, Image person3){
+    private Animation createPersonAnim(BufferedImage person1,
+            BufferedImage person2, BufferedImage person3){
         Animation anim = new Animation();
         anim.addFrame(person1, 150);
         anim.addFrame(person2, 150);

@@ -88,6 +88,8 @@ public class GameManager extends GameCore {
                     screen.getFullScreenWindow().getGraphicsConfiguration());
         } catch (IOException ex) {
             Logger.getLogger(GameManager.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(GameManager.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         // load resources

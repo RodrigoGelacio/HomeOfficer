@@ -1,6 +1,5 @@
 package com.brackeen.javagamebook.tilegame;
 
-import java.awt.Image;
 import java.util.LinkedList;
 import java.util.Iterator;
 
@@ -50,7 +49,7 @@ public class TileMap {
         no tile is at the location or if the location is out of
         bounds.
     */
-    public Image getTile(int x, int y) {
+    public BufferedImage getTile(int x, int y) {
         if (x < 0 || x >= getWidth() ||
             y < 0 || y >= getHeight())
         {

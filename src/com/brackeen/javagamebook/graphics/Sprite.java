@@ -1,6 +1,6 @@
 package com.brackeen.javagamebook.graphics;
 
-import java.awt.Image;
+import java.awt.image.BufferedImage;
 
 public class Sprite {
 
@@ -108,7 +108,7 @@ public class Sprite {
     /**
         Gets this Sprite's current image.
     */
-    public Image getImage() {
+    public BufferedImage getImage() {
         return anim.getImage();
     }
 

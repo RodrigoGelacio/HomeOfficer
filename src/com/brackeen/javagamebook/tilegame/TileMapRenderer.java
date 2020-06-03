@@ -5,6 +5,7 @@ import java.util.Iterator;
 
 import com.brackeen.javagamebook.graphics.Sprite;
 import com.brackeen.javagamebook.tilegame.sprites.Creature;
+import java.awt.image.BufferedImage;
 
 /**
     The TileMapRenderer class draws a TileMap on the screen.
@@ -27,11 +28,11 @@ public class TileMapRenderer {
     // Math.pow(2, TILE_SIZE_BITS) == TILE_SIZE
     private static final int TILE_SIZE_BITS = 6;
 
-    private Image background; //image for the backgrounf
-    public Image Pause; //pause image
-    public Image Controls; //control image
-    public Image Serendipity; //initial screen image
-    public Image gameOver; //gameOver screen image
+    private BufferedImage background; //image for the backgrounf
+    public BufferedImage Pause; //pause image
+    public BufferedImage Controls; //control image
+    public BufferedImage Serendipity; //initial screen image
+    public BufferedImage gameOver; //gameOver screen image
 
     /**
         Converts a pixel position to a tile position.
@@ -71,7 +72,7 @@ public class TileMapRenderer {
     /**
         Sets the background to draw.
     */
-    public void setBackground(Image background) {
+    public void setBackground(BufferedImage background) {
         this.background = background;
     }
 
@@ -79,7 +80,7 @@ public class TileMapRenderer {
      * setMethod of pause
      * @param Pause 
      */
-    public void setPause(Image Pause) {
+    public void setPause(BufferedImage Pause) {
         this.Pause = Pause;
     }
     
@@ -87,7 +88,7 @@ public class TileMapRenderer {
      * setMethod for controls
      * @param Controls 
      */
-    public void setControls(Image Controls) {
+    public void setControls(BufferedImage Controls) {
         this.Controls = Controls;
     }
     
@@ -95,7 +96,7 @@ public class TileMapRenderer {
      * setMethod for initial screen
      * @param Serendipity 
      */
-    public void setSerendipity(Image Serendipity){
+    public void setSerendipity(BufferedImage Serendipity){
         this.Serendipity = Serendipity;
     }
     
@@ -103,7 +104,7 @@ public class TileMapRenderer {
      * setMethod for gameOver screen
      * @param gameOver 
      */
-    public void setOver(Image gameOver){
+    public void setOver(BufferedImage gameOver){
         this.gameOver = gameOver;
     }
     /**
@@ -155,7 +156,7 @@ public class TileMapRenderer {
             pixelsToTiles(screenWidth) + 1;
         for (int y=0; y<map.getHeight(); y++) {
             for (int x=firstTileX; x <= lastTileX; x++) {
-                Image image = map.getTile(x, y);
+                BufferedImage image = map.getTile(x, y);
                 if (image != null) {
                     g.drawImage(image,
                         tilesToPixels(x) + offsetX,
