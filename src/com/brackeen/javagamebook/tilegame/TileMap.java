@@ -5,7 +5,6 @@ import java.util.LinkedList;
 import java.util.Iterator;
 
 import com.brackeen.javagamebook.graphics.Sprite;
-import java.awt.image.BufferedImage;
 
 /**
     The TileMap class contains the data for a tile-based
@@ -15,7 +14,7 @@ import java.awt.image.BufferedImage;
 */
 public class TileMap {
 
-    private BufferedImage[][] tiles; //array to storage the tile images
+    private Image[][] tiles; //array to storage the tile images
     private LinkedList sprites; //list of all creature sprites
     private Sprite player; //sprite of player
 
@@ -24,7 +23,7 @@ public class TileMap {
         height (in number of tiles) of the map.
     */
     public TileMap(int width, int height) {
-        tiles = new BufferedImage[width][height];
+        tiles = new Image[width][height];
         sprites = new LinkedList();
     }
 
@@ -65,7 +64,7 @@ public class TileMap {
     /**
         Sets the tile at the specified location.
     */
-    public void setTile(int x, int y, BufferedImage tile) {
+    public void setTile(int x, int y, Image tile) {
         tiles[x][y] = tile;
     }
 

@@ -51,10 +51,11 @@ public class ResourceManager {
         Gets an image from the images/ directory.
     */
     public Image loadImage(String name) throws IOException {
-        String filename = "src/images/" + name;
-        return ImageIO.read(new File(filename));
-        //ImageIcon(filename).getImage();
+        String filename = "/images/"+name;
+        return ImageIO.read(getClass().getResourceAsStream(filename));
+        //new ImageIcon(filename).getImage();
         //read(new File(filename))
+        //ImageIO.read(new File(filename));
     }
 
     /**
@@ -186,7 +187,7 @@ public class ResourceManager {
                 // check if the char represents tile A, B, C etc.
                 int tile = ch - 'A';
                 if (tile >= 0 && tile < tiles.size()) {
-                    newMap.setTile(x, y, (BufferedImage)tiles.get(tile));
+                    newMap.setTile(x, y, (Image)tiles.get(tile));
                 }
 
                 // check if the char represents a sprite
