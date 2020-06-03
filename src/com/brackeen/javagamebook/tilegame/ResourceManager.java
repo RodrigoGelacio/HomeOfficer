@@ -8,6 +8,8 @@ import javax.swing.ImageIcon;
 
 import com.brackeen.javagamebook.graphics.*;
 import com.brackeen.javagamebook.tilegame.sprites.*;
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
 
 
 /**
@@ -38,7 +40,7 @@ public class ResourceManager {
         Creates a new ResourceManager with the specified
         GraphicsConfiguration.
     */
-    public ResourceManager(GraphicsConfiguration gc) {
+    public ResourceManager(GraphicsConfiguration gc) throws IOException {
         this.gc = gc;
         loadTileImages();
         loadCreatureSprites();
@@ -48,9 +50,11 @@ public class ResourceManager {
     /**
         Gets an image from the images/ directory.
     */
-    public Image loadImage(String name) {
+    public Image loadImage(String name) throws IOException {
         String filename = "src/images/" + name;
-        return new ImageIcon(filename).getImage();
+        return ImageIO.read(new File(filename));
+        //ImageIcon(filename).getImage();
+        //read(new File(filename))
     }
 
     /**
@@ -182,7 +186,7 @@ public class ResourceManager {
                 // check if the char represents tile A, B, C etc.
                 int tile = ch - 'A';
                 if (tile >= 0 && tile < tiles.size()) {
-                    newMap.setTile(x, y, (Image)tiles.get(tile));
+                    newMap.setTile(x, y, (BufferedImage)tiles.get(tile));
                 }
 
                 // check if the char represents a sprite
@@ -265,7 +269,7 @@ public class ResourceManager {
     // -----------------------------------------------------------
 
 
-    public void loadTileImages() {
+    public void loadTileImages() throws IOException {
         // keep looking for tile A,B,C, etc. this makes it
         // easy to drop new tiles in the images/ directory
         tiles = new ArrayList();
@@ -285,7 +289,7 @@ public class ResourceManager {
     /**
      * Loads all creature assets.
      */
-    public void loadCreatureSprites() {
+    public void loadCreatureSprites() throws IOException {
 
         Image[][] imagesHorizontal = new Image[4][];
         Image[][] imagesUp = new Image[1][];

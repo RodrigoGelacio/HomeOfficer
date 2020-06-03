@@ -13,6 +13,9 @@ import com.brackeen.javagamebook.sound.*;
 import com.brackeen.javagamebook.input.*;
 import com.brackeen.javagamebook.test.GameCore;
 import com.brackeen.javagamebook.tilegame.sprites.*;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * GameManager manages all parts of the game.
@@ -78,26 +81,50 @@ public class GameManager extends GameCore {
         vidas = 3;
         score = 0;
         
-        // start resource manager
-        resourceManager = new ResourceManager(
-                screen.getFullScreenWindow().getGraphicsConfiguration());
+        try {
+            // start resource manager
+            resourceManager = new ResourceManager(
+                    screen.getFullScreenWindow().getGraphicsConfiguration());
+        } catch (IOException ex) {
+            Logger.getLogger(GameManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         // load resources
         renderer = new TileMapRenderer();
-        renderer.setBackground(
-                resourceManager.loadImage("map1.jpg"));
+        try {
+            renderer.setBackground(
+                    resourceManager.loadImage("map1.jpg"));
+        } catch (IOException ex) {
+            Logger.getLogger(GameManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
-        renderer.setSerendipity(
-                resourceManager.loadImage("serendipity.png"));
+        try {
+            renderer.setSerendipity(
+                    resourceManager.loadImage("serendipity.png"));
+        } catch (IOException ex) {
+            Logger.getLogger(GameManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
-        renderer.setOver(
-                resourceManager.loadImage("gameOver.png"));  
+        try {
+            renderer.setOver(  
+                    resourceManager.loadImage("gameOver.png"));
+        } catch (IOException ex) {
+            Logger.getLogger(GameManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
-        renderer.setPause(
-                resourceManager.loadImage("PauseMenu.png"));
+        try {
+            renderer.setPause(
+                    resourceManager.loadImage("PauseMenu.png"));
+        } catch (IOException ex) {
+            Logger.getLogger(GameManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
-        renderer.setControls(
-                resourceManager.loadImage("ControlsMenu.png"));
+        try {
+            renderer.setControls(
+                    resourceManager.loadImage("ControlsMenu.png"));
+        } catch (IOException ex) {
+            Logger.getLogger(GameManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         // load first map
         map = resourceManager.loadNextMap();
@@ -467,8 +494,12 @@ public class GameManager extends GameCore {
                 //play music
                 midiPlayer.setPaused(false);
                 Creature player = (Creature) map.getPlayer();
-                // update player
-                updateCreature(player, elapsedTime);
+                try {
+                    // update player
+                    updateCreature(player, elapsedTime);
+                } catch (IOException ex) {
+                    Logger.getLogger(GameManager.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 player.update(elapsedTime);
 
                 // update other sprites
@@ -480,7 +511,11 @@ public class GameManager extends GameCore {
                         if (creature.getState() == Creature.STATE_DEAD) {
                             i.remove();
                         } else {
-                            updateCreature(creature, elapsedTime);
+                            try {
+                                updateCreature(creature, elapsedTime);
+                            } catch (IOException ex) {
+                                Logger.getLogger(GameManager.class.getName()).log(Level.SEVERE, null, ex);
+                            }
                         }
                     }
                     // normal update
@@ -496,7 +531,7 @@ public class GameManager extends GameCore {
      * and checks collisions.
      */
     private void updateCreature(Creature creature,
-            long elapsedTime) {
+            long elapsedTime) throws IOException {
 
         float dx = creature.getVelocityX();
         float oldX = creature.getX();
@@ -589,7 +624,7 @@ public class GameManager extends GameCore {
      * collisions with Creatures will kill them.
      */
     public void checkPlayerCollision(Player player,
-            boolean canKill) {
+            boolean canKill) throws IOException {
         if (!player.isAlive()) {
             return;
         }
