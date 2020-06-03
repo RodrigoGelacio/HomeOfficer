@@ -675,7 +675,7 @@ public class GameManager extends GameCore {
 
             // get keyboard/mouse input
             checkInput(elapsedTime);
-            if (!over){
+            if (!over && !Passed){
                 //play music
                 midiPlayer.setPaused(false);
                 Creature player = (Creature) map.getPlayer();
@@ -707,6 +707,35 @@ public class GameManager extends GameCore {
                     sprite.update(elapsedTime);
                 }
             }
+            if (Passed) {
+                //check keyboard/input
+                checkInput(elapsedTime);
+                if (mapCounter + 1 != 4) {
+                    map = resourceManager.loadNextMap();
+                    try {
+                        renderer.setBackground(
+                                resourceManager.loadImage("map" + ++mapCounter + ".jpg"));
+                    } catch (IOException ex) {
+                        
+                    }
+                    score = 0;
+                    vidas = 3;
+                    controlTrack++;
+                    midiPlayer.stop();
+                    Sequence sequence
+                        = midiPlayer.getSequence("src/sounds/song" + controlTrack + ".mid");
+                    midiPlayer.play(sequence, true);
+                    //player.setY(badguy.getY() - player.getHeight());
+                    // player.jump(true);
+                } else {
+                        //over = true;
+                        //overScreen = true;
+                        midiPlayer.stop();
+                        finalScreen = true;
+                    }
+                bPassed = false;
+                Passed = false;
+                }
 
         }
     }
@@ -840,30 +869,6 @@ public class GameManager extends GameCore {
                     //pause music
                     midiPlayer.setPaused(true);
                     
-                    if (Passed) {
-                        
-                        if (mapCounter + 1 != 4) {
-                            map = resourceManager.loadNextMap();
-                            renderer.setBackground(
-                                    resourceManager.loadImage("map" + ++mapCounter + ".jpg"));
-                            score = 0;
-                            vidas = 3;
-                            controlTrack++;
-                            midiPlayer.stop();
-                            Sequence sequence
-                                    = midiPlayer.getSequence("src/sounds/song" + controlTrack + ".mid");
-                            midiPlayer.play(sequence, true);
-                            //player.setY(badguy.getY() - player.getHeight());
-                            // player.jump(true);
-                        } else {
-                            //over = true;
-                            //overScreen = true;
-                            midiPlayer.stop();
-                            finalScreen = true;
-                        }
-                        bPassed = false;
-                        Passed = false;
-                    }
                 }
             } else if (vidas <= 0) {
                 // player.jump(true);
