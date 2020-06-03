@@ -53,22 +53,23 @@ public class GameManager extends GameCore {
     private GameAction exit;
     private GameAction pause;
     private GameAction controls;
-    private GameAction serendipity;
-    private GameAction gameover;
+    private GameAction serendipity; //key to stop showing serendipity screen
+    private GameAction gameover; //key to stop showin game over screen
     private boolean bPause = false;
     private boolean bPauseMenu = false;
     private boolean bControls = false;
     private boolean bExit = false;
     private int controlTrack;
     
-    private boolean seren = true;
-    private boolean serenScreen = true;
-    private boolean over = false;
-    private boolean overScreen = false;
+    private boolean seren = true; /*control when to show
+    the serendipity games screen*/
+    private boolean serenScreen = true; //control render of serendipity games
+    private boolean over = false;//control when to show the game over screen
+    private boolean overScreen = false;//control render of game over
 
-    private int vidas;
-    private int score;
-    private int mapCounter;
+    private int vidas; //number of lives 
+    private int score; //score of the player
+    private int mapCounter; //number of map where the player is at
 
     public void init() {
         super.init();
@@ -120,6 +121,37 @@ public class GameManager extends GameCore {
         }
 
         try {
+            renderer.setControls(
+                    resourceManager.loadImage("ControlsMenu.png"));
+        } catch (IOException ex) {
+            Logger.getLogger(GameManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            //load image of serendipity games
+            renderer.setSerendipity(
+                    resourceManager.loadImage("serendipity.png"));
+        } catch (IOException ex) {
+            Logger.getLogger(GameManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        try {
+            //load image of game over
+            renderer.setOver(  
+                    resourceManager.loadImage("gameOver.png"));
+        } catch (IOException ex) {
+            Logger.getLogger(GameManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        try {
+            //load image of pause
+            renderer.setPause(
+                    resourceManager.loadImage("PauseMenu.png"));
+        } catch (IOException ex) {
+            Logger.getLogger(GameManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        try {
+            //load image of controls
             renderer.setControls(
                     resourceManager.loadImage("ControlsMenu.png"));
         } catch (IOException ex) {
@@ -249,18 +281,22 @@ public class GameManager extends GameCore {
         g.setColor(Color.BLUE);
         g.drawString("Vidas: " + vidas, 10, screen.getHeight() - 10);
         g.drawString("Score: " + score, 10, screen.getHeight() - 30);
+        //draw Serendipity games screen
         if (serenScreen){
             g.drawImage(renderer.Serendipity, 0,0,screen.getWidth(),screen.getHeight(),null);
         }
         
+        //draw game over screen
         if (overScreen){
             g.drawImage(renderer.gameOver, 0, 0, screen.getWidth(), screen.getHeight(), null);
         }
         
+        //draw pause screen
         if (bPauseMenu) {
             g.drawImage(renderer.Pause, screen.getWidth() / 2 - 250, screen.getHeight() / 2 - 250, 500, 500, null);
         }
 
+        //draw controls screen
         if (bControls) {
             g.drawImage(renderer.Controls, screen.getWidth() / 2 - 250, screen.getHeight() / 2 - 250, 500, 500, null);
         }
@@ -406,23 +442,25 @@ public class GameManager extends GameCore {
      * map.
      */
     public void update(long elapsedTime) {
+        //check if the serendipity screen is on
         if(seren){
             //check keyboard/input
             checkInput (elapsedTime);
             //pause music
             midiPlayer.setPaused(true);
-            
+            //if space key is pressed stop showing
             if (serendipity.isPressed()){
                 seren = false;
                 serenScreen = false;
             }
         }
+        //pause the game
         if (bPause) {
             //check keyboard/input
             checkInput(elapsedTime);
             //pause music
             midiPlayer.setPaused(true);
-
+            //show controls of the game
             if (controls.isPressed()) {
                 if (!bControls) {
                     bControls = true;
@@ -453,7 +491,7 @@ public class GameManager extends GameCore {
                 }
 
             }
-
+            //show controls of the game
             if (controls.isPressed()) {
                 if (!bControls) {
                     bControls = true;
@@ -469,6 +507,7 @@ public class GameManager extends GameCore {
                 if(vidas == 0){
                     GameOverSound.play();
                 }
+                //show game over screen
                 over = true;
                 overScreen = true;
                 if(over){
@@ -477,6 +516,7 @@ public class GameManager extends GameCore {
                    checkInput(elapsedTime);
                    //pause music
                    midiPlayer.setPaused(true);
+                   //stop showing pause screen
                     if(gameover.isPressed()){
                         over = false;
                         overScreen = false;

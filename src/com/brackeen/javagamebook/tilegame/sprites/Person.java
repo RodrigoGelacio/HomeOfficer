@@ -13,8 +13,10 @@ import com.brackeen.javagamebook.graphics.Animation;
  */
 public class Person extends Creature{
     
+    //Speed of the person
     private float SPEED = 0.2f;
     
+    //Persons Animations
     public Person(Animation left, Animation right, Animation up, Animation down,
             Animation deadLeft, Animation deadRight) {
         super(left, right, up, down, deadLeft, deadRight);
@@ -25,6 +27,7 @@ public class Person extends Creature{
 //        super.setY(y);
 //    }
     
+    //Gets Max Speed of the person
     public float getMaxSpeed() {
         return SPEED;
     }
@@ -34,6 +37,7 @@ public class Person extends Creature{
 //        
 //    }
 
+    //Sets Max Speed of the person
     public void setMaxSpeed(float f) {
        SPEED = f;
     }
