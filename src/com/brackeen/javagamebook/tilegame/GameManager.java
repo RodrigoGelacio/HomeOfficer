@@ -346,6 +346,7 @@ public class GameManager extends GameCore {
             } else if (map3.isPressed()) {
                 try {
                     map = resourceManager.loadNextMap();
+                    map = resourceManager.loadNextMap();
                     renderer.setBackground(
                             resourceManager.loadImage("map3.jpg"));
                     score = 0;
@@ -580,7 +581,7 @@ public class GameManager extends GameCore {
      * map.
      */
     public void update(long elapsedTime) {
-        if(seren){
+        if(seren||bMenu){
             //check keyboard/input
             checkInput (elapsedTime);
             //pause music
@@ -835,7 +836,7 @@ public class GameManager extends GameCore {
                 ouchSounds[rand].play();
                 badguy.setState(Creature.STATE_DYING);
                 score += 10;
-                if (score > 100) {
+                if (score == 100) {
                     bPassed = true;
                     //pause music
                     midiPlayer.setPaused(true);
