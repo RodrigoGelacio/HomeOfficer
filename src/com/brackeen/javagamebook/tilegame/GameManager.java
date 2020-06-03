@@ -628,6 +628,7 @@ public class GameManager extends GameCore {
                     renderer.setBackground(
                             resourceManager.loadImage("map" + ++mapCounter + ".jpg"));
                     score = 0;
+                    vidas = 3;
                     controlTrack++;
                     midiPlayer.stop();
                     Sequence sequence
