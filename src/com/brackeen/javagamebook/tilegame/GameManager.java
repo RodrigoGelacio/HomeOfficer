@@ -258,7 +258,7 @@ public class GameManager extends GameCore {
         inputManager.mapToKey(gameover, KeyEvent.VK_ENTER);
         inputManager.mapToKey(start, KeyEvent.VK_A);
         inputManager.mapToKey(maps, KeyEvent.VK_S);
-        inputManager.mapToKey(controles, KeyEvent.VK_D);
+        inputManager.mapToKey(controles, KeyEvent.VK_W);
         inputManager.mapToKey(passed, KeyEvent.VK_F);
         inputManager.mapToKey(map1, KeyEvent.VK_1);
         inputManager.mapToKey(map2, KeyEvent.VK_2);
