@@ -655,7 +655,7 @@ public class GameManager extends GameCore {
                 //soundManager.play(boopSound);
                 badguy.setState(Creature.STATE_DYING);
                 HPLostSound.play();
-                //vidas--;
+                vidas--;
             }
         } else if (collisionSprite instanceof Person) {
             Creature badguy = (Creature) collisionSprite;

@@ -6,15 +6,19 @@
             <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/JuegoBrackeen/src/com/brackeen/javagamebook/graphics/Animation.java</file>
             <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/JuegoBrackeen/src/com/brackeen/javagamebook/tilegame/ResourceManager.java</file>
             <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/JuegoBrackeen/src/com/brackeen/javagamebook/tilegame/sprites/Player.java</file>
+            <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/JuegoBrackeen/src/images/gameOverFinal.png</file>
             <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/JuegoBrackeen/src/com/brackeen/javagamebook/graphics/Sprite.java</file>
             <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/JuegoBrackeen/nbproject/build-impl.xml</file>
+            <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/JuegoBrackeen/src/com/brackeen/javagamebook/sound/MidiPlayer.java</file>
             <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/JuegoBrackeen/src/com/brackeen/javagamebook/tilegame/TileMap.java</file>
             <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/JuegoBrackeen/src/maps/map1.txt</file>
             <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/JuegoBrackeen/src/com/brackeen/javagamebook/tilegame/TileMapRenderer.java</file>
+            <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/JuegoBrackeen/src/com/brackeen/javagamebook/input/InputManager.java</file>
             <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/JuegoBrackeen/src/com/brackeen/javagamebook/tilegame/sprites/Creature.java</file>
             <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/JuegoBrackeen/src/com/brackeen/javagamebook/graphics/NullRepaintManager.java</file>
             <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/JuegoBrackeen/src/com/brackeen/javagamebook/graphics/ScreenManager.java</file>
             <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/JuegoBrackeen/src/com/brackeen/javagamebook/test/GameCore.java</file>
+            <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/JuegoBrackeen/src/maps/map3.txt</file>
             <file>file:/C:/Users/Rodrigo/Documents/NetBeansProjects/JuegoBrackeen/src/com/brackeen/javagamebook/tilegame/GameManager.java</file>
         </group>
     </open-files>
