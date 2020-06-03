@@ -258,7 +258,7 @@ public class GameManager extends GameCore {
         inputManager.mapToKey(gameover, KeyEvent.VK_ENTER);
         inputManager.mapToKey(start, KeyEvent.VK_A);
         inputManager.mapToKey(maps, KeyEvent.VK_S);
-        inputManager.mapToKey(controles, KeyEvent.VK_D);
+        inputManager.mapToKey(controles, KeyEvent.VK_W);
         inputManager.mapToKey(passed, KeyEvent.VK_F);
         inputManager.mapToKey(map1, KeyEvent.VK_1);
         inputManager.mapToKey(map2, KeyEvent.VK_2);
@@ -281,7 +281,8 @@ public class GameManager extends GameCore {
         
         
         if(passed.isPressed()){
-            Passed = true;
+            bPassed = false;
+            Passed = false;
         }
         
         if(exit.isPressed()){
@@ -345,6 +346,7 @@ public class GameManager extends GameCore {
                 }
             } else if (map3.isPressed()) {
                 try {
+                    map = resourceManager.loadNextMap();
                     map = resourceManager.loadNextMap();
                     renderer.setBackground(
                             resourceManager.loadImage("map3.jpg"));
@@ -580,7 +582,7 @@ public class GameManager extends GameCore {
      * map.
      */
     public void update(long elapsedTime) {
-        if(seren){
+        if(seren||bMenu){
             //check keyboard/input
             checkInput (elapsedTime);
             //pause music
@@ -672,6 +674,40 @@ public class GameManager extends GameCore {
                     }
                 }
             }
+            if (score > 100) {
+                    bPassed = true;
+                    Passed = true;
+                    //pause music
+                    midiPlayer.setPaused(true);
+                    
+                    if (Passed) {
+                        //check input /keyboard
+                        checkInput(elapsedTime);
+                        if (mapCounter + 1 != 4) {
+                            map = resourceManager.loadNextMap();
+                            try {
+                                renderer.setBackground(
+                                        resourceManager.loadImage("map" + ++mapCounter + ".jpg"));
+                            } catch (IOException ex) {
+                                Logger.getLogger(GameManager.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            score = 0;
+                            vidas = 3;
+                            controlTrack++;
+                            midiPlayer.stop();
+                            Sequence sequence
+                                    = midiPlayer.getSequence("src/sounds/song" + controlTrack + ".mid");
+                            midiPlayer.play(sequence, true);
+                            //player.setY(badguy.getY() - player.getHeight());
+                            // player.jump(true);
+                        } else {
+                            //over = true;
+                            //overScreen = true;
+                            midiPlayer.stop();
+                            finalScreen = true;
+                        }
+                    }
+                }
 
             // get keyboard/mouse input
             checkInput(elapsedTime);
@@ -707,35 +743,6 @@ public class GameManager extends GameCore {
                     sprite.update(elapsedTime);
                 }
             }
-            if (Passed) {
-                //check keyboard/input
-                checkInput(elapsedTime);
-                if (mapCounter + 1 != 4) {
-                    map = resourceManager.loadNextMap();
-                    try {
-                        renderer.setBackground(
-                                resourceManager.loadImage("map" + ++mapCounter + ".jpg"));
-                    } catch (IOException ex) {
-                        
-                    }
-                    score = 0;
-                    vidas = 3;
-                    controlTrack++;
-                    midiPlayer.stop();
-                    Sequence sequence
-                        = midiPlayer.getSequence("src/sounds/song" + controlTrack + ".mid");
-                    midiPlayer.play(sequence, true);
-                    //player.setY(badguy.getY() - player.getHeight());
-                    // player.jump(true);
-                } else {
-                        //over = true;
-                        //overScreen = true;
-                        midiPlayer.stop();
-                        finalScreen = true;
-                    }
-                bPassed = false;
-                Passed = false;
-                }
 
         }
     }
@@ -864,12 +871,6 @@ public class GameManager extends GameCore {
                 ouchSounds[rand].play();
                 badguy.setState(Creature.STATE_DYING);
                 score += 10;
-                if (score > 100) {
-                    bPassed = true;
-                    //pause music
-                    midiPlayer.setPaused(true);
-                    
-                }
             } else if (vidas <= 0) {
                 // player.jump(true);
             } else {
